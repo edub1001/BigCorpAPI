@@ -7,11 +7,12 @@ Your task is to build a web app with a read-only JSON api for 3 resources,  emp
 ## API
 Your app should support GET requests to two endpoints (list & detail) for each resource following a standard REST convention
 ### detail  
-/employees/1 
+- /employees/1 
 ### list 
-/employees 
-list should support query  limit  and  offset  to support pagination. limit  is the max number of records returned, and  offset  is the index at which to start. for instance  /employees?limit=10&offset=17  returns the 18th through 27th employee By default,  limit  is 100 and the max  limit  is 1000 in addition, both methods should support a query parameter called  expand  that lets you expand data along paths of to-one relationships
+- /employees <br/>
+(list should support query  limit  and  offset  to support pagination. limit  is the max number of records returned, and  offset  is the index at which to start. for instance  /employees?limit=10&offset=17  returns the 18th through 27th employee By default,  limit  is 100 and the max  limit  is 1000.)
 
+In addition, both methods should support a query parameter called  expand  that lets you expand data along paths of to-one relationships
 There are four relationships that can be expanded,
 manager  in  employees  (expands to  employees ) office  in  employees  (expands to  offices ) department  in  employees  (expands to  departments ) superdepartment  in  departments  (expands to  departments )
 
