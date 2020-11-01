@@ -51,7 +51,7 @@ import { Office } from "./office";
  *                   description: The office where employee works. It can be the given id of the Office or Office full details
  *                   oneOf:
  *                    - type: integer
- *                    - $ref: '#/components/schemas/Office'                   
+ *                    - $ref: '#/components/schemas/Office'
  *           example:
  *               id: 1
  *               first: Eduardo

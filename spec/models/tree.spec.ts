@@ -1,4 +1,4 @@
-import { Tree, TreeNode } from "../../src/models/tree"
+import { Tree } from "../../src/models/tree"
 
 describe("Tree", () => {
     let tree: Tree<string>;
@@ -8,7 +8,6 @@ describe("Tree", () => {
     });
 
     it("should have root value by default", () => {
-        expect(tree._value).toBe("employee");
         expect(tree.getValue()).toBe("employee");
     });
 
@@ -16,9 +15,8 @@ describe("Tree", () => {
         expect(tree.size()).toBe(1);
     });
 
-    it("should have undefined children by default", () => {
-        expect(tree._children).toBe(undefined);
-        expect(tree.getChildren()).toBe(undefined);
+    it("should have empty children by default", () => {
+        expect(tree.getChildren().length).toBe(0);
     });
 
     it("should not be able to add same value twice in the level", () => {
@@ -51,7 +49,6 @@ describe("Tree when adding more levels", () => {
     });
 
     it("should have root employee", () => {
-        expect(tree._value).toBe("employee");
         expect(tree.getValue()).toBe("employee");
     });
 
@@ -65,7 +62,6 @@ describe("Tree when adding more levels", () => {
 
     it("should have first level children whose parent is root", () => {
         tree.getChildren().forEach(c =>{
-            expect(c._parent).toBeInstanceOf(Tree);
             expect(c.getParent()).toBeInstanceOf(Tree);
             expect(c.getParent().getValue()).toBe("employee");
         });
@@ -83,7 +79,6 @@ describe("Tree when adding more levels", () => {
 
     it("should have first level children whose parent is root", () => {
         tree.getChildren().forEach(c =>{
-            expect(c._parent).toBeInstanceOf(Tree);
             expect(c.getParent()).toBeInstanceOf(Tree);
             expect(c.getParent().getValue()).toBe("employee");
         });
@@ -99,8 +94,6 @@ describe("Tree when adding more levels", () => {
 
     it("should have second level children whose parent is manager", () => {
         tree.getChild("manager").getChildren().forEach(c =>{
-            expect(c._parent).toBeInstanceOf(TreeNode);
-            expect(c.getParent()).toBeInstanceOf(TreeNode);
             expect(c.getParent().getValue()).toBe("manager");
         });
     });
