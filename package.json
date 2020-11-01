@@ -13,6 +13,10 @@
     "prestart": "npm run clean && npm run build",
     "start": "nodemon"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edub1001/BigCorpAPI.git"
+  },
   "author": "Eduardo Back",
   "license": "ISC",
   "dependencies": {
@@ -21,6 +25,7 @@
     "express": "^4.17.1",
     "helmet": "^4.1.1",
     "inversify": "^5.0.1",
+    "openapi-types": "^7.0.1",
     "reflect-metadata": "^0.1.13",
     "swagger-jsdoc": "^5.0.0",
     "swagger-ui-express": "^4.1.4"
@@ -36,6 +41,7 @@
     "jasmine": "^3.6.3",
     "jasmine-spec-reporter": "^6.0.0",
     "jasmine-ts": "^0.3.0",
+    "moq.ts": "^6.4.0",
     "nodemon": "^2.0.6",
     "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",

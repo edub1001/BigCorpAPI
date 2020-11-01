@@ -16,13 +16,13 @@ describe("Tree", () => {
     });
 
     it("should have empty children by default", () => {
-        expect(tree.getChildren().length).toBe(0);
+        expect(tree.getChildren()).toHaveSize(0);
     });
 
     it("should not be able to add same value twice in the level", () => {
         tree.addChild("manager");
         tree.addChild("manager");
-        expect(tree.getChildren().length).toBe(1);
+        expect(tree.getChildren()).toHaveSize(1);
     });
 });
 
@@ -53,7 +53,7 @@ describe("Tree when adding more levels", () => {
     });
 
     it("should have first level children as 3", () => {
-        expect(tree.getChildren().length).toBe(3);
+        expect(tree.getChildren()).toHaveSize(3);
     });
 
     it("should have first level children as manager, office, department", () => {
@@ -85,7 +85,7 @@ describe("Tree when adding more levels", () => {
     });
 
     it("should have second level children for manager as 2", () => {
-        expect(tree.getChild("manager").getChildren().length).toBe(2);
+        expect(tree.getChild("manager").getChildren()).toHaveSize(2);
     });
 
     it("should have second level children for manager as department, office", () => {
@@ -99,7 +99,7 @@ describe("Tree when adding more levels", () => {
     });
 
     it("should have third level children for manager and deparment as 1", () => {
-        expect(tree.getChild("manager").getChild("department").getChildren().length).toBe(1);
+        expect(tree.getChild("manager").getChild("department").getChildren()).toHaveSize(1);
     });
 
     it("should have third level children for for manager and deparment as superdepartment", () => {
