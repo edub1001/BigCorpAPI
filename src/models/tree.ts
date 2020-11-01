@@ -60,7 +60,7 @@ abstract class TreeBase<T> {
      * Get all children nodes for current one
      * @returns All the children nodes or empty array
      */
-    getChildren(): TreeNode<T>[] {
+    getChildren(): ReadonlyArray<TreeNode<T>> {
         return this._children;
     }
 }
@@ -76,7 +76,7 @@ class Tree<T> extends TreeBase<T> {
     size(): number {
         let rootMax = 0;
         // function to iterate through all nodes checking its levels
-        const getChildSize = (max: number, childrens: TreeNode<T>[]) => {
+        const getChildSize = (max: number, childrens: ReadonlyArray<TreeNode<T>>) => {
             // for each child node received, grab and fetch its children size
             childrens.forEach(node => {
                 // get one level down the tree, looking into node childrens

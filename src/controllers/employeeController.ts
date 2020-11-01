@@ -50,7 +50,7 @@ export class EmployeeController {
         return employees[0];
     }
 
-    expandEntity(entitiesToExpand: any, expandCategories: TreeNode<Expanders>[]): void {
+    expandEntity(entitiesToExpand: any, expandCategories: ReadonlyArray<TreeNode<Expanders>>): void {
         for (const expandCategory of expandCategories) {
             // use factory that will handle the expansion
             const expander = this.expanderFactory.getExpander(expandCategory.getValue());
