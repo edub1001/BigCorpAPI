@@ -25,7 +25,7 @@ const swaggerOptions = {
             }]
         }
     },
-    apis: ["**/*.ts"]
+    apis: ["src/**/*.ts"]
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
