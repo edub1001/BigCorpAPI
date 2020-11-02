@@ -1,18 +1,29 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "lib": ["es6", "dom"],
-      "types": ["reflect-metadata", "@types/jasmine"],
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "outDir": "./dist",
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "sourceMap": true,
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "removeComments": true
-    },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules", "build", "**/*.spec.ts"]
-    }
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "types": [
+      "@types/jasmine",
+      "reflect-metadata",
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "removeComments": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "spec"
+  ]
+}
