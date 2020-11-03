@@ -7,31 +7,30 @@ import { Expanders } from "./expanders";
 
 @injectable()
 export class ManagerExpander implements IManagerExpander, IExpander {
-    constructor(@inject(PROVIDERS_TYPES.IEmployeeProvider) private employeeProvider:IEmployeeProvider) {}
+    constructor(@inject(PROVIDERS_TYPES.IEmployeeProvider) private employeeProvider: IEmployeeProvider) { }
 
     applyTo(expander: Expanders): boolean {
         return expander === Expanders.manager;
     }
 
-    expand(employees: Employee[]) : Employee[] {
-        const managers : Employee[] = [];
+    async expand(employees: Employee[]): Promise<Employee[]> {
+        const managers: Employee[] = [];
         // get all the manager ids at once
         const managerIds = employees.map(e => e.manager).filter(mId => mId !== undefined);
-        const uniqueManagerIds : number[] = [...new Set(managerIds)] as number[];
+        const uniqueManagerIds: number[] = [...new Set(managerIds)] as number[];
         // get all this level managers in one call to server
-        const managersRetrieved = this.employeeProvider.getById(uniqueManagerIds);
-        // set each manager by looking into memory saved managers
-        employees.forEach(employee =>
-        {
-            // look up manager linked to employee, and expand employee with manager data
-            const manager = managersRetrieved.find(m => m.id === employee.manager);
-            employee.manager = manager;
-            if (manager !== undefined)
-            {
-                managers.push(manager);
-            }
+        return await this.employeeProvider.getById(uniqueManagerIds).then(managersRetrieved => {
+            // set each manager by looking into memory saved managers
+            employees.forEach(employee => {
+                // look up manager linked to employee, and expand employee with manager data
+                const manager = managersRetrieved.find(m => m.id === employee.manager);
+                employee.manager = manager;
+                if (manager !== undefined) {
+                    managers.push(manager);
+                }
+            });
+            // return managers that were expanded to expand further if needed
+            return managers;
         });
-        // return managers that were expanded to expand further if needed
-        return managers;
     }
 }

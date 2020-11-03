@@ -54,9 +54,11 @@ export class EmployeeController {
         for (const expandCategory of expandCategories) {
             // use factory that will handle the expansion
             const expander = this.expanderFactory.getExpander(expandCategory.getValue());
-            const expandedEntities = expander.expand(entitiesToExpand);
-            // expand returned entities further with other categories
-            this.expandEntity(expandedEntities, expandCategory.getChildren());
+            const expandedEntitiesPromise = expander.expand(entitiesToExpand);
+            Promise.resolve(expandedEntitiesPromise).then(expandedEntities => {
+                // expand returned entities further with other categories
+                this.expandEntity(expandedEntities, expandCategory.getChildren());
+            });
         }
     }
 }

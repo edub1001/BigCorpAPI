@@ -14,7 +14,7 @@ export interface IExpanderFactory {
 
 
 export interface IManagerExpander {
-    expand(employees: Employee[]) : Employee[];
+    expand(employees: Employee[]) : Promise<Employee[]>;
 }
 
 export interface IDepartmentExpander {

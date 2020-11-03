@@ -14,6 +14,6 @@ export interface IDepartmentProvider extends IBaseProvider<Department> {
 }
 
 export interface IEmployeeProvider {
-    getById(ids:number[]) : Employee[];
-    getAll(limit:number, offset:number) : Employee[];
+    getById(ids:number[]) : Promise<Employee[]>;
+    getAll(limit:number, offset:number) : Promise<Employee[]>;
 }
