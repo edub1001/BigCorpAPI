@@ -47,7 +47,9 @@ app.get('/employees', async (req, res, next) => {
         const limit = req.query.limit;
         const offset = req.query.offset;
         const expanders = req.query.expand as string[];
-        res.status(200).send(employeeController.getEmployees(limit, offset, expanders));
+        employeeController.getEmployees(limit, offset, expanders).then(employees => {
+            res.status(200).send(employees);
+        });
     } catch (error) {
         if (error in ParamError) {
             res.status(400).send(error);
@@ -63,7 +65,13 @@ app.get('/employees/:id', async (req, res, next) => {
         const employeeController = container.resolve(EmployeeController);
         const id = req.params.id;
         const expanders = req.query.expand as string[];
-        res.status(200).send(employeeController.getEmployee(id, expanders));
+        employeeController.getEmployee(id, expanders).then(employee => {
+            if (employee === undefined) {
+                res.status(404).send("Not found");
+            } else {
+                res.status(200).send(employee);
+            }
+        });
     } catch (error) {
         if (error in ParamError) {
             res.status(400).send(error);

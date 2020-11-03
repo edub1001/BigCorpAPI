@@ -1,11 +1,8 @@
 import { It, Mock, Times } from 'moq.ts';
 import "reflect-metadata";
-import { Employee } from "../../../src/models/employee";
-import { Office } from "../../../src/models/office";
-import { ExpanderFactory } from "../../../src/services/expanders/expanderFactory";
-import { Expanders } from "../../../src/services/expanders/expanders";
-import { IExpander, IExpanderFactory } from '../../../src/services/expanders/interfaces';
-import { OfficeExpander } from "../../../src/services/expanders/officeExpander";
+import { ExpanderFactory } from "../../../../src/services/expanders/expanderFactory";
+import { Expanders } from "../../../../src/services/expanders/expanders";
+import { IExpander, IExpanderFactory } from '../../../../src/services/expanders/interfaces';
 
 describe("Expander factory", () => {
     let departmentExpanderMock : Mock<IExpander>;

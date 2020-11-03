@@ -34,7 +34,7 @@ export class OfficeExpander extends BaseExpander<Office> implements IOfficeExpan
      * @returns An array of unique office objects expanded in the employees passed
      */
     expand(employees: Employee[]): Office[] {
-        // safe check property office at runtime
+        // safe check property office at compilation
         const propertyOf = <T>(name: keyof T) => name;
         return super.expand(employees, propertyOf<Employee>("office"));
     }

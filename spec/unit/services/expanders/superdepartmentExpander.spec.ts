@@ -1,16 +1,14 @@
-import { Mock } from 'moq.ts';
-import "reflect-metadata";
-import { Department } from "../../../src/models/department";
-import { IDepartmentProvider } from "../../../src/providers/interfaces";
-import { DepartmentExpander } from "../../../src/services/expanders/departmentExpander";
-import { Expanders } from "../../../src/services/expanders/expanders";
+import { IDepartmentProvider } from "../../../../src/providers/interfaces";
+import { SuperdepartmentExpander } from "../../../../src/services/expanders/superdepartmentExpander";
+import { Expanders } from "../../../../src/services/expanders/expanders";
 import { executeSharedTests } from './baseExpander.spec';
+import { Mock } from "moq.ts";
+import { Department } from "../../../../src/models/department";
 
-describe("Department expander", () => {
+describe("Superdepartment expander", () => {
     const createInstance = () => {
         const departmentProviderMock = new Mock<IDepartmentProvider>();
-        const departmentExpander = new DepartmentExpander(departmentProviderMock.object());
-        // create departments
+        const superdepartmentExpander = new SuperdepartmentExpander(departmentProviderMock.object());
         const departments = [];
         departments.push(new Department(1));
         departments.push(new Department(2));
@@ -19,15 +17,15 @@ describe("Department expander", () => {
         departmentProviderMock.setup(x => x.getById(departments[1].id)).returns(departments[1]);
         departmentProviderMock.setup(x => x.getById(departments[2].id)).returns(departments[2]);
         return {
-            expander: departmentExpander,
+            expander: superdepartmentExpander,
             providerMock: departmentProviderMock,
             entitiesExpanded: departments,
-            propertyName: "department"
+            propertyName: "superdepartment"
         };
     };
 
     it("should handle department expansion", () => {
-        expect(createInstance().expander.applyTo(Expanders.department)).toBeTrue();
+        expect(createInstance().expander.applyTo(Expanders.superdepartment)).toBeTrue();
     });
 
     executeSharedTests(createInstance);

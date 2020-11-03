@@ -1,9 +1,11 @@
+import { injectable } from "inversify";
 import { BaseEntity } from "../../models/baseEntity";
 import { IBaseProvider } from "../../providers/interfaces";
 
 /**
  * Base Class to expand objects
  */
+@injectable()
 export abstract class BaseExpander<T extends BaseEntity> {
     /**
      * Inject a type of provider

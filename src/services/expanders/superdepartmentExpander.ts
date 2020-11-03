@@ -33,7 +33,7 @@ export class SuperdepartmentExpander extends BaseExpander<Department> implements
      * @returns An array of unique department objects expanded in the departments passed
      */
     expand(departments: Department[]): Department[] {
-        // safe check property superdepartment at runtime
+        // safe check property superdepartment at compilation
         const propertyOf = <T>(name: keyof T) => name;
         return super.expand(departments, propertyOf<Department>("superdepartment"));
     }

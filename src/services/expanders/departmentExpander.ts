@@ -34,7 +34,7 @@ export class DepartmentExpander extends BaseExpander<Department> implements IDep
      * @returns An array of unique department objects expanded in the employees passed
      */
     expand(employees: Employee[]): Department[] {
-        // safe check property department at runtime
+        // safe check property department at compilation
         const propertyOf = <T>(name: keyof T) => name;
         return super.expand(employees, propertyOf<Employee>("department"));
     }

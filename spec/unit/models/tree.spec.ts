@@ -1,4 +1,4 @@
-import { Tree } from "../../src/models/tree"
+import { Tree } from "../../../src/models/tree"
 
 describe("Tree", () => {
     let tree: Tree<string>;

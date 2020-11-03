@@ -1,7 +1,6 @@
+import * as departments from "../../config/departments.json";
 import { injectable } from "inversify";
-import { Department } from "../models/department";
 import { BaseProvider } from "./baseProvider";
-import * as departments from "./departments.json";
 import { IDepartmentProvider } from "./interfaces";
 
 @injectable()

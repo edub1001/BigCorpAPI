@@ -1,5 +1,5 @@
-import { Expanders } from "../../../src/services/expanders/expanders";
-import {tryToParseToExpanderTree} from "../../../src/services/expanders/treeExpanderValidator"
+import { Expanders } from "../../../../src/services/expanders/expanders";
+import {tryToParseToExpanderTree} from "../../../../src/services/expanders/treeExpanderValidator"
 
 describe("Tree Expander Validator", () => {
     it("should not allow values other than valid expanders", () => {

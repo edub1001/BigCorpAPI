@@ -8,6 +8,7 @@ import { EXPANDERS_TYPES } from "../services/expanders/types";
 import { IEmployeeProvider } from "../providers/interfaces";
 import { IExpanderFactory } from "../services/expanders/interfaces";
 import "reflect-metadata";
+import { Employee } from "../models/employee";
 
 @injectable()
 export class EmployeeController {
@@ -16,7 +17,7 @@ export class EmployeeController {
         @inject(EXPANDERS_TYPES.IExpanderFactory) private expanderFactory: IExpanderFactory) {
     }
 
-    getEmployees(limit: any = 100, offset: any = 0, expand: string[]) {
+    async getEmployees(limit: any = 100, offset: any = 0, expand: string[]): Promise<Employee[]> {
         if (limit === isNaN || limit < 1 || limit > 1000) {
             throw new ParamError("Limit should be greater than 0 and less or equal to 1000");
         }
@@ -28,26 +29,30 @@ export class EmployeeController {
         if (errors.length > 0) {
             throw new ParamError(...errors);
         }
-        const employees = this.employeeProvider.getAll(limit, offset);
-        // if expansion needed, let's go with it
-        if (expandTree.size() > 1) {
+        const employeesPromise = this.employeeProvider.getAll(limit, offset);
+        return employeesPromise.then(employees => {
+            // expand employees, if children is empty, expansion will return right away
             this.expandEntity(employees, expandTree.getChildren());
-        }
-        return employees;
+            return employees;
+        });
     }
 
-    getEmployee(id: any, expand: string[]) {
+    async getEmployee(id: any, expand: string[]): Promise<Employee> {
         const errors = [];
         const expandTree = tryToParseToExpanderTree(expand, errors);
         if (errors.length > 0) {
             throw new ParamError(...errors);
         }
-        const employees = this.employeeProvider.getById([id]);
-        // if expansion needed, let's go with it
-        if (expandTree.size() > 1) {
+        const employeesPromise = this.employeeProvider.getById([id]);
+        return employeesPromise.then(employees => {
+            // if no employee, return undefined
+            if (employees.length === 0) {
+                return undefined;
+            }
+            // expand employees, if children is empty, expansion will return right away
             this.expandEntity(employees, expandTree.getChildren());
-        }
-        return employees[0];
+            return employees[0];
+        });
     }
 
     expandEntity(entitiesToExpand: any, expandCategories: ReadonlyArray<TreeNode<Expanders>>): void {
