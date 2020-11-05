@@ -1,4 +1,4 @@
-import { IDepartmentProvider } from "../../../../src/providers/interfaces";
+import { IDepartmentProvider } from "../../../../src/services/providers/interfaces";
 import { SuperdepartmentExpander } from "../../../../src/services/expanders/superdepartmentExpander";
 import { Expanders } from "../../../../src/services/expanders/expanders";
 import { executeSharedTests } from './baseExpander.spec';

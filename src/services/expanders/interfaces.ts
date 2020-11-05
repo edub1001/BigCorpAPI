@@ -18,13 +18,13 @@ export interface IManagerExpander {
 }
 
 export interface IDepartmentExpander {
-    expand(employees: Employee[]) : Department[];
+    expand(employees: Employee[]) : Promise<Department[]>;
 }
 
 export interface IOfficeExpander {
-    expand(employees: Employee[]) : Office[];
+    expand(employees: Employee[]) : Promise<Office[]>;
 }
 
 export interface ISuperdepartmentExpander {
-    expand(employees: Department[]) : Department[];
+    expand(employees: Department[]) : Promise<Department[]>;
 }

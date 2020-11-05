@@ -1,7 +1,7 @@
 import { Mock } from 'moq.ts';
 import "reflect-metadata";
 import { Office } from "../../../../src/models/office";
-import { IOfficeProvider } from "../../../../src/providers/interfaces";
+import { IOfficeProvider } from "../../../../src/services/providers/interfaces";
 import { Expanders } from "../../../../src/services/expanders/expanders";
 import { OfficeExpander } from "../../../../src/services/expanders/officeExpander";
 import { executeSharedTests } from './baseExpander.spec';

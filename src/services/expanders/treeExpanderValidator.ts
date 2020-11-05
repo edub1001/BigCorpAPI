@@ -1,7 +1,9 @@
 import { Tree, TreeBase } from "../../models/tree"
+import { ErrorCodes, ServicesError } from "../servicesError";
 import { Expanders } from "./expanders"
 
-function tryToParseToExpanderTree(expand: string[], errors: string[]): Tree<Expanders> {
+function tryToParseToExpanderTree(expand: string[]): Tree<Expanders> {
+    const errors = [];
     const expanderTree = new Tree<Expanders>(Expanders.employee);
     if (expand !== undefined) {
         expand.forEach(expandString => {
@@ -16,6 +18,9 @@ function tryToParseToExpanderTree(expand: string[], errors: string[]): Tree<Expa
                 node = node.addChild(typedExpander);
             }
         });
+    }
+    if (errors.length > 0) {
+        throw new ServicesError(ErrorCodes.EXPAND_ERROR, ...errors);
     }
     return expanderTree;
 }

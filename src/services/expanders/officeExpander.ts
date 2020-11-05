@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import { Employee } from "../../models/employee";
 import { Office } from "../../models/office";
-import { IOfficeProvider } from "../../providers/interfaces";
-import { PROVIDERS_TYPES } from "../../providers/types";
+import { IOfficeProvider } from "../providers/interfaces";
+import { PROVIDERS_TYPES } from "../providers/types";
 import { BaseExpander } from "./baseExpander";
 import { Expanders } from "./expanders";
 import { IExpander, IOfficeExpander } from "./interfaces";
@@ -33,9 +33,9 @@ export class OfficeExpander extends BaseExpander<Office> implements IOfficeExpan
      * @param employees An array of employees to expand office
      * @returns An array of unique office objects expanded in the employees passed
      */
-    expand(employees: Employee[]): Office[] {
+    async expand(employees: Employee[]): Promise<Office[]> {
         // safe check property office at compilation
         const propertyOf = <T>(name: keyof T) => name;
-        return super.expand(employees, propertyOf<Employee>("office"));
+        return await super.expand(employees, propertyOf<Employee>("office"));
     }
 }

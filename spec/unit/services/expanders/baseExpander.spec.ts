@@ -1,7 +1,7 @@
 import { It, Mock, Times } from 'moq.ts';
 import "reflect-metadata";
 import { BaseEntity } from '../../../../src/models/baseEntity';
-import { IBaseProvider } from "../../../../src/providers/interfaces";
+import { IBaseProvider } from "../../../../src/services/providers/interfaces";
 import { IExpander } from '../../../../src/services/expanders/interfaces';
 
 interface IExpanderTestEntities {

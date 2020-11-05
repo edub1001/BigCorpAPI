@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import { IEmployeeProvider } from "../../src/providers/interfaces";
-import { EmployeeProvider } from "../../src/providers/employeeProvider";
+import { IEmployeeProvider } from "../../src/services/providers/interfaces";
+import { EmployeeProvider } from "../../src/services/providers/employeeProvider";
 
 describe("Basic Employee Provider check", () => {
     let employeeProvider: IEmployeeProvider;

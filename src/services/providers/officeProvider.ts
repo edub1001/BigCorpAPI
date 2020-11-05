@@ -1,4 +1,4 @@
-import * as offices from "../../config/offices.json";
+import * as offices from "../../../config/offices.json";
 import { injectable } from "inversify";
 import { BaseProvider } from "./baseProvider";
 import { IOfficeProvider } from "./interfaces";

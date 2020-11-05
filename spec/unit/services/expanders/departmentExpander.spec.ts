@@ -1,7 +1,7 @@
 import { Mock } from 'moq.ts';
 import "reflect-metadata";
 import { Department } from "../../../../src/models/department";
-import { IDepartmentProvider } from "../../../../src/providers/interfaces";
+import { IDepartmentProvider } from "../../../../src/services/providers/interfaces";
 import { DepartmentExpander } from "../../../../src/services/expanders/departmentExpander";
 import { Expanders } from "../../../../src/services/expanders/expanders";
 import { executeSharedTests } from './baseExpander.spec';

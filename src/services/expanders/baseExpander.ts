@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { BaseEntity } from "../../models/baseEntity";
-import { IBaseProvider } from "../../providers/interfaces";
+import { IBaseProvider } from "../providers/interfaces";
 
 /**
  * Base Class to expand objects
@@ -20,7 +20,7 @@ export abstract class BaseExpander<T extends BaseEntity> {
      * @param propertyToExpand Property to expand should let to a number in the object, otherwise it won't expand
      * @returns An array of unique office objects expanded in the employees passed. If propertyToExpand is not a number, it will consider it as expanded
      */
-    expand(entitiesToExpand: BaseEntity[], propertyToExpand: string): T[] {
+    async expand(entitiesToExpand: BaseEntity[], propertyToExpand: string): Promise<T[]> {
         const objectsExpanded = new Map<number, T>();
         // go through all the entities to expand
         for (const entityToExpand of entitiesToExpand) {
@@ -33,7 +33,7 @@ export abstract class BaseExpander<T extends BaseEntity> {
                 }
                 else {
                     // go to provider
-                    const objectExpanded = this.provider.getById(entityToExpand[propertyToExpand]);
+                    const objectExpanded = await this.provider.getById(entityToExpand[propertyToExpand]);
                     if (objectExpanded !== undefined) {
                         entityToExpand[propertyToExpand] = objectExpanded;
                         objectsExpanded.set(objectExpanded.id, objectExpanded);

@@ -1,10 +1,10 @@
 import { Container } from "inversify";
 import { EmployeeController } from "./controllers/employeeController";
-import { DepartmentProvider } from "./providers/departmentProvider";
-import { EmployeeProvider } from "./providers/employeeProvider";
-import { IDepartmentProvider, IEmployeeProvider, IOfficeProvider } from "./providers/interfaces";
-import { OfficeProvider } from "./providers/officeProvider";
-import { PROVIDERS_TYPES } from "./providers/types";
+import { DepartmentProvider } from "./services/providers/departmentProvider";
+import { EmployeeProvider } from "./services/providers/employeeProvider";
+import { IDepartmentProvider, IEmployeeProvider, IOfficeProvider } from "./services/providers/interfaces";
+import { OfficeProvider } from "./services/providers/officeProvider";
+import { PROVIDERS_TYPES } from "./services/providers/types";
 import { DepartmentExpander } from "./services/expanders/departmentExpander";
 import { ExpanderFactory } from "./services/expanders/expanderFactory";
 import { IExpander, IExpanderFactory } from "./services/expanders/interfaces";

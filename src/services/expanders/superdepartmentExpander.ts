@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { Department } from "../../models/department";
-import { IDepartmentProvider } from "../../providers/interfaces";
-import { PROVIDERS_TYPES } from "../../providers/types";
+import { IDepartmentProvider } from "../providers/interfaces";
+import { PROVIDERS_TYPES } from "../providers/types";
 import { BaseExpander } from "./baseExpander";
 import { Expanders } from "./expanders";
 import { IExpander, ISuperdepartmentExpander } from "./interfaces";
@@ -32,9 +32,9 @@ export class SuperdepartmentExpander extends BaseExpander<Department> implements
      * @param departments An array of departments to expand department by superdepartment
      * @returns An array of unique department objects expanded in the departments passed
      */
-    expand(departments: Department[]): Department[] {
+    async expand(departments: Department[]): Promise<Department[]> {
         // safe check property superdepartment at compilation
         const propertyOf = <T>(name: keyof T) => name;
-        return super.expand(departments, propertyOf<Department>("superdepartment"));
+        return await super.expand(departments, propertyOf<Department>("superdepartment"));
     }
 }
