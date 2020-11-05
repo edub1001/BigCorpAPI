@@ -4,7 +4,8 @@ const EXPANDERS_TYPES = {
     IOfficeExpander: Symbol.for("IOfficeExpander"),
     ISuperdepartmentExpander: Symbol.for("ISuperdepartmentExpander"),
     IExpander: Symbol.for("IExpander"),
-    IExpanderFactory: Symbol.for("IExpanderFactory")
+    IExpanderFactory: Symbol.for("IExpanderFactory"),
+    ExpanderTreeValidator: Symbol.for("ExpanderTreeValidator")
 };
 
 export { EXPANDERS_TYPES };

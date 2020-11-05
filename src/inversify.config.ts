@@ -12,6 +12,7 @@ import { ManagerExpander } from "./services/expanders/managerExpander";
 import { OfficeExpander } from "./services/expanders/officeExpander";
 import { SuperdepartmentExpander } from "./services/expanders/superdepartmentExpander";
 import { EXPANDERS_TYPES } from "./services/expanders/types";
+import { ExpanderTreeValidator } from "./services/expanders/treeExpanderValidator";
 
 
 
@@ -27,6 +28,7 @@ container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(ManagerExpander);
 container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(OfficeExpander);
 container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(SuperdepartmentExpander);
 container.bind<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory).to(ExpanderFactory).inSingletonScope();
+container.bind<ExpanderTreeValidator>(EXPANDERS_TYPES.ExpanderTreeValidator).to(ExpanderTreeValidator).inSingletonScope();
 
 container.bind<EmployeeController>("EmployeeController").to(EmployeeController);
 

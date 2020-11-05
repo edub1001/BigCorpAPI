@@ -28,6 +28,13 @@ export class SuperdepartmentExpander extends BaseExpander<Department> implements
     }
 
     /**
+     * Return which expander we can expand from
+     */
+    expandFrom(): Expanders[] {
+        return [Expanders.department];
+    }
+
+    /**
      * Expand department in objects departments passed by param
      * @param departments An array of departments to expand department by superdepartment
      * @returns An array of unique department objects expanded in the departments passed

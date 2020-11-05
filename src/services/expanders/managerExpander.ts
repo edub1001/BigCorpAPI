@@ -13,6 +13,13 @@ export class ManagerExpander implements IManagerExpander, IExpander {
         return expander === Expanders.manager;
     }
 
+    /**
+     * Return which expander we can expand from
+     */
+    expandFrom(): Expanders[] {
+        return [Expanders.employee, Expanders.manager];
+    }
+
     async expand(employees: Employee[]): Promise<Employee[]> {
         const managers: Employee[] = [];
         // get all the manager ids at once

@@ -29,6 +29,13 @@ export class OfficeExpander extends BaseExpander<Office> implements IOfficeExpan
     }
 
     /**
+     * Return which expander we can expand from
+     */
+    expandFrom(): Expanders[] {
+        return [Expanders.employee, Expanders.manager];
+    }
+
+    /**
      * Expand offices in objects employee passed by param
      * @param employees An array of employees to expand office
      * @returns An array of unique office objects expanded in the employees passed

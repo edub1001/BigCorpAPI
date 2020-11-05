@@ -29,6 +29,13 @@ export class DepartmentExpander extends BaseExpander<Department> implements IDep
     }
 
     /**
+     * Return which expander we can expand from
+     */
+    expandFrom(): Expanders[] {
+        return [Expanders.employee, Expanders.manager];
+    }
+
+    /**
      * Expand departments in objects employee passed by param
      * @param employees An array of employees to expand departments
      * @returns An array of unique department objects expanded in the employees passed

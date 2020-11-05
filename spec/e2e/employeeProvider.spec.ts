@@ -9,8 +9,8 @@ describe("Basic Employee Provider check", () => {
         employeeProvider = new EmployeeProvider();
     });
 
-    it("should return employees with id", async () => {
-        const employees = await employeeProvider.getById([1,2,3]);
+    it("should return employees with ids", async () => {
+        const employees = await employeeProvider.getByIds([1,2,3]);
         expect(employees).toHaveSize(3);
         expect(employees[0].id).toBe(1);
         expect(employees[1].id).toBe(2);

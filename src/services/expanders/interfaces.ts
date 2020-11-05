@@ -6,6 +6,7 @@ import { Expanders } from "./expanders";
 export interface IExpander {
     expand(itemsToExpand : any) : any;
     applyTo(expander:Expanders) : boolean;
+    expandFrom() : Expanders[];
 }
 
 export interface IExpanderFactory {
