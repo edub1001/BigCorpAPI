@@ -36,6 +36,17 @@ describe("Expander factory", () => {
         expect(() => new ExpanderFactory([])).toThrowError();
     });
 
+    it("should get undefined if no expander sent", () => {
+        const mockExpander1 = new Mock<IExpander>();
+        mockExpander1.setup(x => x.applyTo(Expanders.employee)).returns(true);
+        // act on expand
+        expanderFactory = new ExpanderFactory([mockExpander1.object()])
+        const undefinedExpander = expanderFactory.getExpander(undefined);
+        // assert
+        mockExpander1.verify(x => x.applyTo(It.Is(v=> v === undefined)), Times.Exactly(1));
+        expect(undefinedExpander).toBeUndefined();
+    });
+
     it("should get fist instance", () => {
         const mockExpander1 = new Mock<IExpander>();
         const mockExpander2 = new Mock<IExpander>();

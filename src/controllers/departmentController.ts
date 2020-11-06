@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import { Department } from "../models/department";
+import { Expanders } from "../services/expanders/expanders";
 import { IExpanderFactory } from "../services/expanders/interfaces";
 import { ExpanderTreeValidator } from "../services/expanders/treeExpanderValidator";
 import { EXPANDERS_TYPES } from "../services/expanders/types";
@@ -14,6 +15,6 @@ export class DepartmentController extends BaseController<Department> {
         @inject(PROVIDERS_TYPES.IDepartmentProvider) departmentProvider: IDepartmentProvider,
         @inject(EXPANDERS_TYPES.IExpanderFactory) expanderFactory: IExpanderFactory,
         @inject(EXPANDERS_TYPES.ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
-        super(departmentProvider, expanderFactory, expanderTreeValidator);
+        super(departmentProvider, expanderFactory, expanderTreeValidator, Expanders.department);
     }
 }

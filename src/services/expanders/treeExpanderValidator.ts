@@ -10,9 +10,9 @@ export class ExpanderTreeValidator {
     constructor(@inject(EXPANDERS_TYPES.IExpanderFactory) private expanderFactory: IExpanderFactory) {
     }
 
-    tryToParseToExpanderTree(expand: string[]): Tree<Expanders> {
+    tryToParseToExpanderTree(expand: string[], rootNode:Expanders): Tree<Expanders> {
         const errors = [];
-        const expanderTree = new Tree<Expanders>(Expanders.employee);
+        const expanderTree = new Tree<Expanders>(rootNode);
         if (expand !== undefined) {
             expand.forEach(expandString => {
                 let node = expanderTree as TreeBase<Expanders>;
@@ -20,20 +20,19 @@ export class ExpanderTreeValidator {
                     // check if string is a valid expander
                     const typedExpanderString = expandStringTerm as keyof typeof Expanders;
                     const typedExpander = Expanders[typedExpanderString];
-                    if (typedExpander === undefined) {
+                    const expanderService = this.expanderFactory.getExpander(typedExpander);
+                    if (typedExpander === undefined || expanderService === undefined) {
                         errors.push(`${typedExpanderString} is not allowed to be expanded`);
                         break;
                     }
-                    const insertedNode = node.addChild(typedExpander);
                     // check if it can be expanded from parent
-                    const expanderService = this.expanderFactory.getExpander(typedExpander);
-                    const parentExpandedType = insertedNode.getParent().getValue();
-                    if(!expanderService.expandFrom().includes(parentExpandedType)) {
+                    const parentExpandedType = node.getValue();
+                    if(expanderService.expandFrom().indexOf(parentExpandedType) < 0) {
                         const parentExpandedTypeString = Expanders[parentExpandedType];
-                        errors.push(`${typedExpanderString} cannot be expand from ${parentExpandedTypeString}`);
+                        errors.push(`${typedExpanderString} cannot be expanded from ${parentExpandedTypeString}`);
                         break;
                     }
-                    node = insertedNode;
+                    node = node.addChild(typedExpander);
                 }
             });
         }

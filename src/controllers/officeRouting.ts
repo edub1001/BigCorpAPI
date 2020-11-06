@@ -37,7 +37,7 @@ export function addOfficeRoutes(router: Router) {
      *           400:
      *             description: Bad request.
      *                  Error Code => LIMIT_ERROR. Limit should be greater than 0 and less or equal to 1000
-     *                  Error Code => OFFSET_ERROR. Offset should be greater than 0
+     *                  Error Code => OFFSET_ERROR. Offset should be greater or equal than 0
      *             content:
      *               application/json:
      *                 schema:

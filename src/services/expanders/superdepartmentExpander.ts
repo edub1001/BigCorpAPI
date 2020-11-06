@@ -31,7 +31,7 @@ export class SuperdepartmentExpander extends BaseExpander<Department> implements
      * Return which expander we can expand from
      */
     expandFrom(): Expanders[] {
-        return [Expanders.department];
+        return [Expanders.department, Expanders.superdepartment];
     }
 
     /**

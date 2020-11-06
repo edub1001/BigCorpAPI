@@ -14,14 +14,15 @@ import { HttpStatusCode } from "./baseController";
  *                   type: string
  *               message:
  *                   description: A more detailed description of the error
- *                   type: string
+ *                   type: array
+ *                   items: string
  *           example:
  *               error: UNEXPECTED_ERROR
- *               message: "Please contact system admin"
+ *               message: ["Please contact system admin"]
  */
 export class AppError {
     error: string;
-    message: string;
+    message: string[];
 }
 
 // tslint:disable: no-string-literal
@@ -29,7 +30,7 @@ export function errorMiddleware(error: any, request: Request, response: Response
     if (error instanceof ServicesError && error["statusCode"] !== undefined) {
         response.status(error["statusCode"]).send({
             "error": ErrorCodes[error.errorCode],
-            "message": error.message
+            "message": error.errors
         });
     }
     else {

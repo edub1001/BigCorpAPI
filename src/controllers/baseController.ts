@@ -22,7 +22,8 @@ export abstract class BaseController<T extends BaseEntity> {
     constructor(
         @unmanaged() private provider: IBaseProvider<T>,
         @unmanaged() private expanderFactory: IExpanderFactory,
-        @unmanaged() private expanderTreeValidator: ExpanderTreeValidator) {
+        @unmanaged() private expanderTreeValidator: ExpanderTreeValidator,
+        @unmanaged() private expanderBase:Expanders) {
     }
 
     wrapStatusCode = (fun: () => void, statusCode: HttpStatusCode) => {
@@ -41,7 +42,7 @@ export abstract class BaseController<T extends BaseEntity> {
         this.wrapStatusCode(() =>validateLimit(limit), HttpStatusCode.BAD_REQUEST);
         this.wrapStatusCode(() => validateOffset(offset), HttpStatusCode.BAD_REQUEST);
         let expandTree: Tree<Expanders>;
-        this.wrapStatusCode(() => expandTree = this.expanderTreeValidator.tryToParseToExpanderTree(expand), HttpStatusCode.BAD_REQUEST);
+        this.wrapStatusCode(() => expandTree = this.expanderTreeValidator.tryToParseToExpanderTree(expand, this.expanderBase), HttpStatusCode.BAD_REQUEST);
         const entities = await this.provider.getAll(limit, offset);
         // expand entities, if children is empty, expansion will return right away
         await this.expandEntity(entities, expandTree.getChildren());
@@ -51,7 +52,7 @@ export abstract class BaseController<T extends BaseEntity> {
     async getEntity(id: any, expand?: string[]): Promise<T> {
         this.wrapStatusCode(() => validateId(id), HttpStatusCode.BAD_REQUEST);
         let expandTree: Tree<Expanders>;
-        this.wrapStatusCode(() => expandTree =  this.expanderTreeValidator.tryToParseToExpanderTree(expand), HttpStatusCode.BAD_REQUEST);
+        this.wrapStatusCode(() => expandTree =  this.expanderTreeValidator.tryToParseToExpanderTree(expand, this.expanderBase), HttpStatusCode.BAD_REQUEST);
         let entity: T;
         this.wrapStatusCode(async () => entity = await this.provider.getById(id), HttpStatusCode.NOT_FOUND);
         // expand entity, if children is empty, expansion will return right away

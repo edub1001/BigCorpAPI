@@ -7,7 +7,9 @@ export enum ErrorCodes {
 }
 
 export class ServicesError extends Error {
-    constructor(public errorCode:ErrorCodes, ...errors:any[]) {
-        super(...errors);
+    public errors: string[];
+    constructor(public errorCode:ErrorCodes, ...errors:string[]) {
+        super(errors.join(". "));
+        this.errors = errors;
     }
 }

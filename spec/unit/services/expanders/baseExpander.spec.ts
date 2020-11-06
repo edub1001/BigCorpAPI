@@ -22,7 +22,7 @@ export function executeSharedTests(createInstanceFn: () => IExpanderTestEntities
             ({ expander, providerMock, entitiesExpanded, propertyName } = createInstanceFn());
         });
 
-        it("should expand entity in entities to expand", () => {
+        it("should expand entity in entities to expand", async () => {
             const entitiesToExpand = [];
             const entity = { [propertyName]: entitiesExpanded[0].id };
             // add 2 entities with same value in property to expand
@@ -30,7 +30,7 @@ export function executeSharedTests(createInstanceFn: () => IExpanderTestEntities
             entitiesToExpand.push({ ...entity });
             entitiesToExpand.push({ ...entity, [propertyName]: entitiesExpanded[2].id });
             // act on expand
-            const entitiesExpandedReturned = expander.expand(entitiesToExpand);
+            const entitiesExpandedReturned = await expander.expand(entitiesToExpand);
             // assert
             providerMock.verify(x => x.getById(It.Is(v => v === entitiesExpanded[0].id)), Times.Exactly(1));
             providerMock.verify(x => x.getById(It.Is(v => v === entitiesExpanded[1].id)), Times.Never());
@@ -45,26 +45,26 @@ export function executeSharedTests(createInstanceFn: () => IExpanderTestEntities
             expect(entitiesToExpand[2][propertyName]).toBe(entitiesExpanded[2]);
         });
 
-        it("should not expand already expanded property", () => {
+        it("should not expand already expanded property", async () => {
             // clone and assign expanded entity that will be returned by provider
             const entity = { [propertyName]: { ...entitiesExpanded[0] } };
             const entitiesToExpand = [];
             entitiesToExpand.push(entity);
-            providerMock.setup(x => x.getById(It.IsAny())).returns(entitiesExpanded[0]);
+            providerMock.setup(x => x.getById(It.IsAny())).returns(Promise.resolve(entitiesExpanded[0]));
             // act on expand
-            const entitiesExpandedReturned = expander.expand(entitiesToExpand);
+            const entitiesExpandedReturned = await expander.expand(entitiesToExpand);
             // assert, shoudl keep object already expanded instead of the one returned by provider
             expect(entitiesExpandedReturned[0]).toBe(entity[propertyName]);
             expect(entity[propertyName]).not.toBe(entitiesExpanded[0]);
         });
 
-        it("should not expand entity not found", () => {
+        it("should not expand entity not found", async () => {
             const entity = { [propertyName]: entitiesExpanded[0].id };
             const entitiesToExpand = [];
             entitiesToExpand.push(entity);
             providerMock.setup(x => x.getById(It.IsAny())).returns(undefined);
             // act on expand
-            const entitiesExpandedReturned = expander.expand(entitiesToExpand);
+            const entitiesExpandedReturned = await expander.expand(entitiesToExpand);
             // assert
             providerMock.verify(x => x.getById(It.Is(v => v === entitiesExpanded[0].id)), Times.Exactly(1));
             // not expanded, collection returned will be empty
