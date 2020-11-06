@@ -34,14 +34,28 @@ export function addEmployeeRoutes(router: Router) {
      *             type: string
      *          responses:
      *           200:
-     *             description: List of employees matching criteria
+     *             description: OK. List of employees matching criteria
      *             content:
      *               application/json:
      *                 schema:
-     *                  $ref: '#/components/schemas/Employee'
+     *                   type: "array"
+     *                   items:
+     *                      $ref: '#/components/schemas/Employee'
      *           400:
-     *             description: Bad request. User ID must be an integer and larger than 0.
-     *
+     *             description: Bad request.
+     *                  Error Code => LIMIT_ERROR. Limit should be greater than 0 and less or equal to 1000
+     *                  Error Code => OFFSET_ERROR. Offset should be greater than 0
+     *                  Error Code => EXPAND_ERROR. Expandable parameters are not supported
+     *             content:
+     *               application/json:
+     *                 schema:
+     *                      $ref: '#/components/schemas/AppError'
+     *           5XX:
+     *             description: Unexpected error. Error Code => UNEXPECTED_ERROR. Contact system admin
+     *             content:
+     *               application/json:
+     *                 schema:
+     *                      $ref: '#/components/schemas/AppError'
      */
     router.get('/employees', async (req, res) => {
         const employeeController = container.get<EmployeeController>("EmployeeController");
@@ -52,6 +66,55 @@ export function addEmployeeRoutes(router: Router) {
         res.status(HttpStatusCode.OK).send(employees);
     });
 
+    /**
+     * @swagger
+     *
+     *      /employees/{id}:
+     *         get:
+     *          tags:
+     *          - Employees
+     *          summary: Get single employee by id with option to expand fields.
+     *          produces:
+     *           - application/json
+     *          parameters:
+     *           - name: id
+     *             description: Identifier for employee looked for
+     *             in: path
+     *             required: true
+     *             type: integer
+     *           - name: expand
+     *             description: Expand is used to determine which properties in employee or its relationships to expand. There are four relationships that can be expanded ->
+     *              manager in  employees (expands to  employees); office  in  employees  (expands to  offices); department  in  employees  (expands to  departments);
+     *              superdepartment in  departments (expands to  departments)
+     *             in: query
+     *             required: false
+     *             type: string
+     *          responses:
+     *           200:
+     *             description: OK. Single employee matching criteria
+     *             content:
+     *               application/json:
+     *                 schema:
+     *                  $ref: '#/components/schemas/Employee'
+     *           400:
+     *             description: Bad request. Error Code => EXPAND_ERROR. Expandable parameters are not supported
+     *             content:
+     *               application/json:
+     *                 schema:
+     *                      $ref: '#/components/schemas/AppError'
+     *           404:
+     *             description: Not found. Error Code => NOT_FOUND. Employee with given id not existing
+     *             content:
+     *               application/json:
+     *                 schema:
+     *                      $ref: '#/components/schemas/AppError'
+     *           5XX:
+     *             description: Unexpected error. Error Code => UNEXPECTED_ERROR. Contact system admin
+     *             content:
+     *               application/json:
+     *                 schema:
+     *                      $ref: '#/components/schemas/AppError'
+     */
     router.get('/employees/:id', async (req, res) => {
         const employeeController = container.resolve(EmployeeController);
         const id = req.params.id;
