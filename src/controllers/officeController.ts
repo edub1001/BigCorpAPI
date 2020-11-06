@@ -1,19 +1,19 @@
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
-import { Employee } from "../models/employee";
+import { Office } from "../models/office";
 import { IExpanderFactory } from "../services/expanders/interfaces";
 import { ExpanderTreeValidator } from "../services/expanders/treeExpanderValidator";
 import { EXPANDERS_TYPES } from "../services/expanders/types";
-import { IEmployeeProvider } from "../services/providers/interfaces";
+import { IOfficeProvider } from "../services/providers/interfaces";
 import { PROVIDERS_TYPES } from "../services/providers/types";
 import { BaseController } from "./baseController";
 
 @injectable()
-export class EmployeeController extends BaseController<Employee> {
+export class OfficeController extends BaseController<Office> {
     constructor(
-        @inject(PROVIDERS_TYPES.IEmployeeProvider) employeeProvider: IEmployeeProvider,
+        @inject(PROVIDERS_TYPES.IOfficeProvider) officeProvider: IOfficeProvider,
         @inject(EXPANDERS_TYPES.IExpanderFactory) expanderFactory: IExpanderFactory,
         @inject(EXPANDERS_TYPES.ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
-        super(employeeProvider, expanderFactory, expanderTreeValidator);
+        super(officeProvider, expanderFactory, expanderTreeValidator);
     }
 }

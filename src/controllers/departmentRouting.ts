@@ -1,22 +1,22 @@
-import { EmployeeController } from "./employeeController";
+import { DepartmentController } from "./departmentController";
 import { container } from "../inversify.config";
 import { HttpStatusCode } from "./baseController";
 import { Router } from "express";
 
-export function addEmployeeRoutes(router: Router) {
+export function addDepartmentRoutes(router: Router) {
     /**
      * @swagger
      *
-     *      /employees:
+     *      /departments:
      *         get:
      *          tags:
-     *          - Employees
-     *          summary: Get all the employees list in a paginated way with option to expand fields.
+     *          - Departments
+     *          summary: Get all the departments list in a paginated way with option to expand fields.
      *          produces:
      *           - application/json
      *          parameters:
      *           - name: limit
-     *             description: Limit used to determine the number of employees to return. By default, limit is 100 and the max limit is 1000
+     *             description: Limit used to determine the number of departments to return. By default, limit is 100 and the max limit is 1000
      *             in: query
      *             required: false
      *             type: integer
@@ -26,21 +26,20 @@ export function addEmployeeRoutes(router: Router) {
      *             required: false
      *             type: integer
      *           - name: expand
-     *             description: Expand is used to determine which properties in employee or its relationships to expand. There are four relationships that can be expanded ->
-     *              manager in  employees (expands to  employees); office  in  employees  (expands to  offices); department  in  employees  (expands to  departments);
+     *             description: Expand is used to determine which properties in departments or its relationships to expand. There is one relationship that can be expanded ->
      *              superdepartment in  departments (expands to  departments)
      *             in: query
      *             required: false
      *             type: string
      *          responses:
      *           200:
-     *             description: OK. List of employees matching criteria
+     *             description: OK. List of departments matching criteria
      *             content:
      *               application/json:
      *                 schema:
      *                   type: "array"
      *                   items:
-     *                      $ref: '#/components/schemas/Employee'
+     *                      $ref: '#/components/schemas/Department'
      *           400:
      *             description: Bad request.
      *                  Error Code => LIMIT_ERROR. Limit should be greater than 0 and less or equal to 1000
@@ -57,45 +56,44 @@ export function addEmployeeRoutes(router: Router) {
      *                 schema:
      *                      $ref: '#/components/schemas/AppError'
      */
-    router.get('/employees', async (req, res) => {
-        const employeeController = container.get<EmployeeController>("EmployeeController");
+    router.get('/departments', async (req, res) => {
+        const departmentController = container.get<DepartmentController>("DepartmentController");
         const limit = req.query.limit;
         const offset = req.query.offset;
         const expanders = req.query.expand as string[];
-        const employees = await employeeController.getEntities(limit, offset, expanders);
-        res.status(HttpStatusCode.OK).send(employees);
+        const departments = await departmentController.getEntities(limit, offset, expanders);
+        res.status(HttpStatusCode.OK).send(departments);
     });
 
     /**
      * @swagger
      *
-     *      /employees/{id}:
+     *      /departments/{id}:
      *         get:
      *          tags:
-     *          - Employees
-     *          summary: Get single employee by id with option to expand fields.
+     *          - Departments
+     *          summary: Get single department by id with option to expand fields.
      *          produces:
      *           - application/json
      *          parameters:
      *           - name: id
-     *             description: Identifier for employee looked for
+     *             description: Identifier for department looked for
      *             in: path
      *             required: true
      *             type: integer
      *           - name: expand
-     *             description: Expand is used to determine which properties in employee or its relationships to expand. There are four relationships that can be expanded ->
-     *              manager in  employees (expands to  employees); office  in  employees  (expands to  offices); department  in  employees  (expands to  departments);
+     *             description: Expand is used to determine which properties in departments or its relationships to expand. There is one relationship that can be expanded ->
      *              superdepartment in  departments (expands to  departments)
      *             in: query
      *             required: false
      *             type: string
      *          responses:
      *           200:
-     *             description: OK. Single employee matching criteria
+     *             description: OK. Single department matching criteria
      *             content:
      *               application/json:
      *                 schema:
-     *                  $ref: '#/components/schemas/Employee'
+     *                  $ref: '#/components/schemas/Department'
      *           400:
      *             description: Bad request.
      *                  Error Code => ID_ERROR. Id should be greater than 0
@@ -105,7 +103,7 @@ export function addEmployeeRoutes(router: Router) {
      *                 schema:
      *                      $ref: '#/components/schemas/AppError'
      *           404:
-     *             description: Not found. Error Code => NOT_FOUND. Employee with given id not existing
+     *             description: Not found. Error Code => NOT_FOUND. Department with given id not existing
      *             content:
      *               application/json:
      *                 schema:
@@ -117,11 +115,11 @@ export function addEmployeeRoutes(router: Router) {
      *                 schema:
      *                      $ref: '#/components/schemas/AppError'
      */
-    router.get('/employees/:id', async (req, res) => {
-        const employeeController = container.resolve(EmployeeController);
+    router.get('/departments/:id', async (req, res) => {
+        const departmentController = container.resolve(DepartmentController);
         const id = req.params.id;
         const expanders = req.query.expand as string[];
-        const employee = await employeeController.getEntity(id, expanders);
-        res.status(HttpStatusCode.OK).send(employee);
+        const department = await departmentController.getEntity(id, expanders);
+        res.status(HttpStatusCode.OK).send(department);
     });
 }

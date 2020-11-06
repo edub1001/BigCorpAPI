@@ -1,4 +1,5 @@
 export enum ErrorCodes {
+    ID_ERROR,
     LIMIT_ERROR,
     OFFSET_ERROR,
     EXPAND_ERROR,
