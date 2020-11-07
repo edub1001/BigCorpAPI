@@ -1,6 +1,7 @@
 import { injectable, unmanaged } from "inversify";
 import { BaseEntity } from "../models/baseEntity";
 import { Tree, TreeNode } from "../models/tree";
+import { validateEntity } from "../services/entityValidator";
 import { Expanders } from "../services/expanders/expanders";
 import { IExpanderFactory } from "../services/expanders/interfaces";
 import { ExpanderTreeValidator } from "../services/expanders/treeExpanderValidator";
@@ -53,8 +54,8 @@ export abstract class BaseController<T extends BaseEntity> {
         this.wrapStatusCode(() => validateId(id), HttpStatusCode.BAD_REQUEST);
         let expandTree: Tree<Expanders>;
         this.wrapStatusCode(() => expandTree =  this.expanderTreeValidator.tryToParseToExpanderTree(expand, this.expanderBase), HttpStatusCode.BAD_REQUEST);
-        let entity: T;
-        this.wrapStatusCode(async () => entity = await this.provider.getById(Number(id)), HttpStatusCode.NOT_FOUND);
+        const entity = await this.provider.getById(Number(id));
+        this.wrapStatusCode(() => validateEntity(entity) , HttpStatusCode.NOT_FOUND);
         // expand entity, if children is empty, expansion will return right away
         await this.expandEntity(entity, expandTree.getChildren());
         return entity;

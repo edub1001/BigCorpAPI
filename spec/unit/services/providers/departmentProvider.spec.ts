@@ -15,13 +15,18 @@ describe("Department provider", () => {
         expect(department.id).toBe(1);
     });
 
-    it("should get copy of office", async () => {
+    it("should get copy of department", async () => {
         const department = await provider.getById(1);
         department.name = "NEW DEPARTMENT";
         const newDepartment = await provider.getById(1);
-        // check basic office data
+        // check basic department data
         expect(newDepartment.name).not.toEqual(department.name);
         expect(newDepartment).not.toBe(department);
+    });
+
+    it("should get undefined deparments with unexisting id", async () => {
+        const department = await provider.getById(1000);
+        expect(department).toBeUndefined();
     });
 
     it("should get all departments with limit and offset starting from the beginning", async () => {
@@ -52,5 +57,10 @@ describe("Department provider", () => {
     it("should get all deparments with big limit", async () => {
         const departments = await provider.getAll(1000, 0);
         expect(departments).toHaveSize(10);
+    });
+
+    it("should get empty deparments with big offset", async () => {
+        const departments = await provider.getAll(5, 1000);
+        expect(departments).toHaveSize(0);
     });
 });

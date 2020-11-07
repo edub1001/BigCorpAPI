@@ -24,6 +24,11 @@ describe("Office provider", () => {
         expect(newOffice).not.toBe(office);
     });
 
+    it("should get undefined office with unexisting id", async () => {
+        const office = await provider.getById(1000);
+        expect(office).toBeUndefined();
+    });
+
     it("should get all offices with limit and offset starting from the beginning", async () => {
         const offices = await provider.getAll(3, 0);
         expect(offices).toHaveSize(3);
@@ -58,5 +63,10 @@ describe("Office provider", () => {
     it("should get all offices with big limit", async () => {
         const offices = await provider.getAll(1000, 0);
         expect(offices).toHaveSize(5);
+    });
+
+    it("should get empty offices with big offset", async () => {
+        const offices = await provider.getAll(5, 1000);
+        expect(offices).toHaveSize(0);
     });
 });

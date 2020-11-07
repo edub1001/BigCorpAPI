@@ -9,6 +9,9 @@ export abstract class BaseProvider<T extends BaseEntity> implements IBaseProvide
     getById(id:number) : Promise<T> {
         // match by id of the base entity
         const entity = this.entities.find(e => e.id === id);
+        if (!entity) {
+            return undefined;
+        }
         // get shallow copy of the element
         return Promise.resolve({...entity});
     }

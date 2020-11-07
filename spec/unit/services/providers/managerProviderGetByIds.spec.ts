@@ -23,7 +23,7 @@ export function executeGetByIds() {
                 response: [employee, employee2]
             });
 
-            const returnedEmployees = await employeeProvider.getByIds([1,2]);
+            const returnedEmployees = await employeeProvider.getByIds([1, 2]);
             // check basic office data
             expect(returnedEmployees).toHaveSize(2);
             expect(returnedEmployees[0].id).toBe(employee.id);
@@ -33,7 +33,11 @@ export function executeGetByIds() {
         });
 
         executeErrorSharedTests(() => {
-            return { testUrl: employeeUrl, employeeFunction: () => employeeProvider.getByIds([1,2]) }
+            return {
+                testUrl: employeeUrl,
+                employeeFunction: () => employeeProvider.getByIds([1, 2]),
+                checkEmptyFunction: (employees: Employee | Employee[]) => expect(employees).toHaveSize(0)
+            }
         });
     });
 }

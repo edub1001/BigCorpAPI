@@ -4,7 +4,8 @@ import { ProvidersErrorCodes } from "./providers/providersError";
 export enum ValidationErrorCodes {
     ID_ERROR,
     LIMIT_ERROR,
-    OFFSET_ERROR
+    OFFSET_ERROR,
+    NOT_EXISTING
 }
 
 export type ErrorCodes = ValidationErrorCodes | ProvidersErrorCodes | ExpandersErrorCodes;

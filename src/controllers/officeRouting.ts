@@ -87,7 +87,7 @@ export function addOfficeRoutes(router: Router) {
      *                 schema:
      *                      $ref: '#/components/schemas/AppError'
      *           404:
-     *             description: Not found. Error Code => NOT_FOUND. Office with given id not existing
+     *             description: Not found. Error Code => NOT_EXISTING. Office with given id not existing
      *             content:
      *               application/json:
      *                 schema:

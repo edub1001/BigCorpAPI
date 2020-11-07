@@ -10,16 +10,18 @@ import { executeGetByIds } from "./managerProviderGetByIds.spec";
 
 interface IEmployeeProviderTest {
     testUrl: string,
-    employeeFunction: () => Promise<Employee> | Promise<Employee[]>
+    employeeFunction: () => Promise<Employee> | Promise<Employee[]>,
+    checkEmptyFunction: (employees: Employee | Employee[]) => void
 }
 
-export function executeErrorSharedTests(createInstanceFn: () => IEmployeeProviderTest, failOnEmpty: boolean = false) {
+export function executeErrorSharedTests(createInstanceFn: () => IEmployeeProviderTest) {
     describe('when external service returning errors', () => {
         let testUrl: string;
         let employeeFunction: () => Promise<Employee> | Promise<Employee[]>;
+        let checkEmptyFunction: (employees: Employee | Employee[]) => void;
 
         beforeEach(() => {
-            ({ testUrl, employeeFunction } = createInstanceFn());
+            ({ testUrl, employeeFunction, checkEmptyFunction } = createInstanceFn());
         });
 
         it("should get error when 404 and response null", async () => {
@@ -51,47 +53,45 @@ export function executeErrorSharedTests(createInstanceFn: () => IEmployeeProvide
             }
         });
 
-        if (!failOnEmpty) {
-            it("should get empty when no employees", async () => {
-                moxios.stubRequest(testUrl, {
-                    status: 200,
-                    response: []
-                });
-
-                const returnedEmployees = await employeeFunction();
-                expect(returnedEmployees).toHaveSize(0);
+        it("should get empty when no employees", async () => {
+            moxios.stubRequest(testUrl, {
+                status: 200,
+                response: []
             });
 
-            it("should get empty with undefined employees", async () => {
-                moxios.stubRequest(testUrl, {
-                    status: 200,
-                    response: undefined
-                });
+            const returnedEmployees = await employeeFunction();
+            checkEmptyFunction(returnedEmployees);
+        });
 
-                const returnedEmployees = await employeeFunction();
-                expect(returnedEmployees).toHaveSize(0);
+        it("should get empty with undefined employees", async () => {
+            moxios.stubRequest(testUrl, {
+                status: 200,
+                response: undefined
             });
 
-            it("should get empty with null employees", async () => {
-                moxios.stubRequest(testUrl, {
-                    status: 200,
-                    response: null
-                });
+            const returnedEmployees = await employeeFunction();
+            checkEmptyFunction(returnedEmployees);
+        });
 
-                const returnedEmployees = await employeeFunction();
-                expect(returnedEmployees).toHaveSize(0);
+        it("should get empty with null employees", async () => {
+            moxios.stubRequest(testUrl, {
+                status: 200,
+                response: null
             });
 
-            it("should get empty when no employee with 404", async () => {
-                moxios.stubRequest(testUrl, {
-                    status: 404,
-                    response: []
-                });
+            const returnedEmployees = await employeeFunction();
+            checkEmptyFunction(returnedEmployees);
+        });
 
-                const returnedEmployees = await employeeFunction();
-                expect(returnedEmployees).toHaveSize(0);
+        it("should get empty when no employee with 404", async () => {
+            moxios.stubRequest(testUrl, {
+                status: 404,
+                response: []
             });
-        }
+
+            const returnedEmployees = await employeeFunction();
+            checkEmptyFunction(returnedEmployees);
+        });
     });
 }
 

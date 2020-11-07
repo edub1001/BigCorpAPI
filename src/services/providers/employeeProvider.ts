@@ -16,7 +16,7 @@ export class EmployeeProvider implements IEmployeeProvider {
     async getById(id: number): Promise<Employee> {
         const employees = await this.getByIds([id]);
         if (!employees || employees.length === 0) {
-            throw new ServicesError(ProvidersErrorCodes.NOT_FOUND, `Employee with id ${id} not found`);
+            return undefined;
         }
         return employees[0];
     }

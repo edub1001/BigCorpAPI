@@ -23,7 +23,7 @@ export function executeGetAll() {
                 response: [employee, employee2]
             });
 
-            const returnedEmployees = await employeeProvider.getAll(2,3);
+            const returnedEmployees = await employeeProvider.getAll(2, 3);
             // check basic office data
             expect(returnedEmployees).toHaveSize(2);
             expect(returnedEmployees[0].id).toBe(employee.id);
@@ -33,7 +33,11 @@ export function executeGetAll() {
         });
 
         executeErrorSharedTests(() => {
-            return { testUrl: employeeUrl, employeeFunction: () => employeeProvider.getAll(2,3) }
+            return {
+                testUrl: employeeUrl,
+                employeeFunction: () => employeeProvider.getAll(2, 3),
+                checkEmptyFunction: (employees: Employee | Employee[]) => expect(employees).toHaveSize(0)
+            }
         });
     });
 }

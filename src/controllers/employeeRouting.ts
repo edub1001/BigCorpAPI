@@ -105,7 +105,7 @@ export function addEmployeeRoutes(router: Router) {
      *                 schema:
      *                      $ref: '#/components/schemas/AppError'
      *           404:
-     *             description: Not found. Error Code => NOT_FOUND. Employee with given id not existing
+     *             description: Not found. Error Code => NOT_EXISTING. Employee with given id not existing
      *             content:
      *               application/json:
      *                 schema:

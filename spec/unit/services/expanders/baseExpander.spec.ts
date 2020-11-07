@@ -72,5 +72,20 @@ export function executeSharedTests(createInstanceFn: () => IExpanderTestEntities
             // no expansion, keep id
             expect(entity[propertyName]).toBe(entitiesExpanded[0].id);
         });
+
+        it("should not expand entity not found", async () => {
+            const entity = { [propertyName]: entitiesExpanded[0].id };
+            const entitiesToExpand = [];
+            entitiesToExpand.push(entity);
+            providerMock.setup(x => x.getById(It.IsAny())).returns(undefined);
+            // act on expand
+            const entitiesExpandedReturned = await expander.expand(entitiesToExpand);
+            // assert
+            providerMock.verify(x => x.getById(It.Is(v => v === entitiesExpanded[0].id)), Times.Exactly(1));
+            // not expanded, collection returned will be empty
+            expect(entitiesExpandedReturned).toHaveSize(0);
+            // no expansion, keep id
+            expect(entity[propertyName]).toBe(entitiesExpanded[0].id);
+        });
     });
 }
