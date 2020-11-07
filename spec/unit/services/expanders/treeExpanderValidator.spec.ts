@@ -1,9 +1,9 @@
 import { It, Mock } from "moq.ts";
-import { Employee } from "../../../../src/models/employee";
 import { Expanders } from "../../../../src/services/expanders/expanders";
+import { ExpandersErrorCodes } from "../../../../src/services/expanders/expandersError";
 import { IExpander, IExpanderFactory } from "../../../../src/services/expanders/interfaces";
-import { ExpanderTreeValidator } from "../../../../src/services/expanders/treeExpanderValidator"
-import { ErrorCodes, ServicesError } from "../../../../src/services/servicesError";
+import { ExpanderTreeValidator } from "../../../../src/services/expanders/treeExpanderValidator";
+import { ServicesError } from "../../../../src/services/servicesError";
 
 describe("Tree Expander Validator", () => {
     let treeExpanderValidator: ExpanderTreeValidator;
@@ -24,7 +24,7 @@ describe("Tree Expander Validator", () => {
         }
         catch (error) {
             expect(error).toBeInstanceOf(ServicesError);
-            expect(error.errorCode).toBe(ErrorCodes.EXPAND_ERROR);
+            expect(error.errorCode).toBe(ExpandersErrorCodes.EXPAND_ERROR);
             expect(error.errors).toHaveSize(2);
             expect(error.errors[0]).toBe("invalidValue is not allowed to be expanded");
             expect(error.errors[1]).toBe("anotherInvalid is not allowed to be expanded");
@@ -40,7 +40,7 @@ describe("Tree Expander Validator", () => {
         }
         catch (error) {
             expect(error).toBeInstanceOf(ServicesError);
-            expect(error.errorCode).toBe(ErrorCodes.EXPAND_ERROR);
+            expect(error.errorCode).toBe(ExpandersErrorCodes.EXPAND_ERROR);
             expect(error.errors).toHaveSize(1);
             expect(error.errors[0]).toBe(`${employee} is not allowed to be expanded`);
         }
@@ -117,7 +117,7 @@ describe("Tree Expander Validator", () => {
         }
         catch (error) {
             expect(error).toBeInstanceOf(ServicesError);
-            expect(error.errorCode).toBe(ErrorCodes.EXPAND_ERROR);
+            expect(error.errorCode).toBe(ExpandersErrorCodes.EXPAND_ERROR);
             expect(error.errors).toHaveSize(3);
             expect(error.errors[0]).toBe("manager cannot be expanded from department");
             expect(error.errors[1]).toBe("manager cannot be expanded from superdepartment");

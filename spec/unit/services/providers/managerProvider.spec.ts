@@ -1,56 +1,132 @@
-import { Office } from '../../../../src/models/office';
-import { OfficeProvider } from '../../../../src/services/providers/officeProvider';
+import * as moxios from "moxios";
+import { config } from 'node-config-ts';
+import { Employee } from '../../../../src/models/employee';
+import { EmployeeProvider } from '../../../../src/services/providers/employeeProvider';
+import { ProvidersErrorCodes } from '../../../../src/services/providers/providersError';
+import { ServicesError } from '../../../../src/services/servicesError';
+import { executeGetAll } from "./managerProviderGetAll.spec";
+import { executeGetById } from "./managerProviderGetById.spec";
+import { executeGetByIds } from "./managerProviderGetByIds.spec";
 
-describe("Office provider", () => {
-    let provider:OfficeProvider;
+interface IEmployeeProviderTest {
+    testUrl: string,
+    employeeFunction: () => Promise<Employee> | Promise<Employee[]>
+}
+
+export function executeErrorSharedTests(createInstanceFn: () => IEmployeeProviderTest, failOnEmpty: boolean = false) {
+    describe('when external service returning errors', () => {
+        let testUrl: string;
+        let employeeFunction: () => Promise<Employee> | Promise<Employee[]>;
+
+        beforeEach(() => {
+            ({ testUrl, employeeFunction } = createInstanceFn());
+        });
+
+        it("should get error when 404 and response null", async () => {
+            moxios.stubRequest(testUrl, null);
+
+            try {
+                await employeeFunction();
+                fail();
+            } catch (error) {
+                expect(error).toBeInstanceOf(ServicesError);
+                expect(error.errorCode).toBe(ProvidersErrorCodes.EMPLOYEE_PROVIDER_ERROR_RESPONSE);
+                expect(error.errors).toHaveSize(1);
+            }
+        });
+
+        it("should get error when 500", async () => {
+            moxios.stubRequest(testUrl, {
+                status: 500,
+                response: { message: "invalid" },
+            });
+
+            try {
+                await employeeFunction();
+                fail();
+            } catch (error) {
+                expect(error).toBeInstanceOf(ServicesError);
+                expect(error.errorCode).toBe(ProvidersErrorCodes.EMPLOYEE_PROVIDER_ERROR_RESPONSE);
+                expect(error.errors).toHaveSize(1);
+            }
+        });
+
+        if (!failOnEmpty) {
+            it("should get empty when no employees", async () => {
+                moxios.stubRequest(testUrl, {
+                    status: 200,
+                    response: []
+                });
+
+                const returnedEmployees = await employeeFunction();
+                expect(returnedEmployees).toHaveSize(0);
+            });
+
+            it("should get empty with undefined employees", async () => {
+                moxios.stubRequest(testUrl, {
+                    status: 200,
+                    response: undefined
+                });
+
+                const returnedEmployees = await employeeFunction();
+                expect(returnedEmployees).toHaveSize(0);
+            });
+
+            it("should get empty with null employees", async () => {
+                moxios.stubRequest(testUrl, {
+                    status: 200,
+                    response: null
+                });
+
+                const returnedEmployees = await employeeFunction();
+                expect(returnedEmployees).toHaveSize(0);
+            });
+
+            it("should get empty when no employee with 404", async () => {
+                moxios.stubRequest(testUrl, {
+                    status: 404,
+                    response: []
+                });
+
+                const returnedEmployees = await employeeFunction();
+                expect(returnedEmployees).toHaveSize(0);
+            });
+        }
+    });
+}
+
+describe("Employee provider", () => {
+    let employeeProvider: EmployeeProvider;
+    const originalEmployeesUrl = config.employeesUrl;
 
     beforeAll(() => {
-        provider = new OfficeProvider();
+        employeeProvider = new EmployeeProvider();
     });
 
-    it("should get office by id", async () => {
-        const office = await provider.getById(1);
-        // check basic office data
-        expect(office).not.toBeUndefined();
-        expect(office.id).toBe(1);
+    beforeEach(() => {
+        config.employeesUrl = "/employeetest"
+        // import and pass your custom axios instance to this method
+        moxios.install();
+    })
+
+    afterEach(() => {
+        config.employeesUrl = originalEmployeesUrl;
+        // import and pass your custom axios instance to this method
+        moxios.uninstall();
+    })
+
+    it("should get error with wrong config", async () => {
+        config.employeesUrl = undefined;
+        expect(() => new EmployeeProvider()).toThrowMatching(error => {
+            expect(error).toBeInstanceOf(ServicesError);
+            expect(error.errorCode).toBe(ProvidersErrorCodes.EMPLOYEE_PROVIDER_MISSING_CONFIG);
+            expect(error.errors).toHaveSize(1);
+            expect(error.errors[0]).toBe(`Please provide a valid employee URL in the config`);
+            return true;
+        });
     });
 
-    it("should get copy of office", async () => {
-        const office = await provider.getById(1);
-        office.city = "NEW CITY";
-        const newOffice = await provider.getById(1);
-        // check basic office data
-        expect(newOffice.city).not.toEqual(office.city);
-        expect(newOffice).not.toBe(office);
-    });
-
-    it("should get all offices with limit and offset starting from the beginning", async () => {
-        const offices = await provider.getAll(3, 0);
-        expect(offices).toHaveSize(3);
-        expect(offices[0].id).toBe(1);
-        expect(offices[1].id).toBe(2);
-        expect(offices[2].id).toBe(3);
-    });
-
-    it("should get all offices with limit and offset starting in 2", async () => {
-        const offices = await provider.getAll(3, 2);
-        expect(offices).toHaveSize(3);
-        expect(offices[0].id).toBe(3);
-        expect(offices[1].id).toBe(4);
-        expect(offices[2].id).toBe(5);
-    });
-
-    it("should get all clone offices", async () => {
-        const offices = await provider.getAll(2, 0);
-        const clonedOffices = await provider.getAll(2, 0);
-        expect(offices[0]).not.toBe(clonedOffices[0]);
-        expect(offices[1]).not.toBe(clonedOffices[1]);
-        expect(offices[0].id).toBe(clonedOffices[0].id);
-        expect(offices[1].id).toBe(clonedOffices[1].id);
-    });
-
-    it("should get all offices with big limit", async () => {
-        const offices = await provider.getAll(1000, 0);
-        expect(offices).toHaveSize(5);
-    });
+    executeGetById();
+    executeGetByIds();
+    executeGetAll();
 });

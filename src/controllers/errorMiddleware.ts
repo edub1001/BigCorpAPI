@@ -34,9 +34,9 @@ export function errorMiddleware(error: any, request: Request, response: Response
         });
     }
     else {
-        // check amount of info you want to send to client
+        // check amount of info you want to disclosure to client
         response.status(HttpStatusCode.INTERNAL_SERVER).send({
-            "error" : ErrorCodes[ErrorCodes.UNEXPECTED_ERROR],
+            "error" : "UNEXPECTED_ERROR",
             "message": error.message
         });
     }

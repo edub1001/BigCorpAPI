@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import { Tree, TreeBase } from "../../models/tree";
 import { ErrorCodes, ServicesError } from "../servicesError";
 import { Expanders } from "./expanders";
+import { ExpandersErrorCodes } from "./expandersError";
 import { IExpanderFactory } from "./interfaces";
 import { EXPANDERS_TYPES } from "./types";
 
@@ -21,7 +22,7 @@ export class ExpanderTreeValidator {
                     const typedExpanderString = expandStringTerm as keyof typeof Expanders;
                     const typedExpander = Expanders[typedExpanderString];
                     const expanderService = this.expanderFactory.getExpander(typedExpander);
-                    if (typedExpander === undefined || expanderService === undefined) {
+                    if (typedExpander === undefined || !expanderService) {
                         errors.push(`${typedExpanderString} is not allowed to be expanded`);
                         break;
                     }
@@ -37,7 +38,7 @@ export class ExpanderTreeValidator {
             });
         }
         if (errors.length > 0) {
-            throw new ServicesError(ErrorCodes.EXPAND_ERROR, ...errors);
+            throw new ServicesError(ExpandersErrorCodes.EXPAND_ERROR, ...errors);
         }
         return expanderTree;
     }
