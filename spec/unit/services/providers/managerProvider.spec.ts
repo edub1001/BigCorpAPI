@@ -32,13 +32,7 @@ describe("Office provider", () => {
         expect(offices[2].id).toBe(3);
     });
 
-    it("should get all offices with limit 1 and offset starting in 2", async () => {
-        const offices = await provider.getAll(1, 2);
-        expect(offices).toHaveSize(1);
-        expect(offices[0].id).toBe(3);
-    });
-
-    it("should get all offices with limit 3 and offset starting in 2", async () => {
+    it("should get all offices with limit and offset starting in 2", async () => {
         const offices = await provider.getAll(3, 2);
         expect(offices).toHaveSize(3);
         expect(offices[0].id).toBe(3);

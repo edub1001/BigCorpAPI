@@ -43,7 +43,7 @@ export abstract class BaseController<T extends BaseEntity> {
         this.wrapStatusCode(() => validateOffset(offset), HttpStatusCode.BAD_REQUEST);
         let expandTree: Tree<Expanders>;
         this.wrapStatusCode(() => expandTree = this.expanderTreeValidator.tryToParseToExpanderTree(expand, this.expanderBase), HttpStatusCode.BAD_REQUEST);
-        const entities = await this.provider.getAll(limit, offset);
+        const entities = await this.provider.getAll(Number(limit), Number(offset));
         // expand entities, if children is empty, expansion will return right away
         await this.expandEntity(entities, expandTree.getChildren());
         return entities;
@@ -54,7 +54,7 @@ export abstract class BaseController<T extends BaseEntity> {
         let expandTree: Tree<Expanders>;
         this.wrapStatusCode(() => expandTree =  this.expanderTreeValidator.tryToParseToExpanderTree(expand, this.expanderBase), HttpStatusCode.BAD_REQUEST);
         let entity: T;
-        this.wrapStatusCode(async () => entity = await this.provider.getById(id), HttpStatusCode.NOT_FOUND);
+        this.wrapStatusCode(async () => entity = await this.provider.getById(Number(id)), HttpStatusCode.NOT_FOUND);
         // expand entity, if children is empty, expansion will return right away
         await this.expandEntity(entity, expandTree.getChildren());
         return entity;
