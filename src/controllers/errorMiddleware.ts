@@ -14,11 +14,11 @@ import { HttpStatusCode } from "./baseController";
  *                   type: string
  *               message:
  *                   description: A more detailed description of the error
- *                   type: array
+ *                   type: array | string
  *                   items: string
  *           example:
  *               error: UNEXPECTED_ERROR
- *               message: ["Please contact system admin"]
+ *               message: "Please contact system admin"
  */
 export class AppError {
     error: string;

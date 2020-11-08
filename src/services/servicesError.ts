@@ -2,10 +2,10 @@ import { ExpandersErrorCodes } from "./expanders/expandersError";
 import { ProvidersErrorCodes } from "./providers/providersError";
 
 export enum ValidationErrorCodes {
-    ID_ERROR,
-    LIMIT_ERROR,
-    OFFSET_ERROR,
-    NOT_EXISTING
+    ID_ERROR = 1,
+    LIMIT_ERROR = 2,
+    OFFSET_ERROR = 3,
+    NOT_EXISTING = 4
 }
 
 export type ErrorCodes = ValidationErrorCodes | ProvidersErrorCodes | ExpandersErrorCodes;
