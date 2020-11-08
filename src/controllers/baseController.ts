@@ -57,7 +57,7 @@ export abstract class BaseController<T extends BaseEntity> {
         const entity = await this.provider.getById(Number(id));
         this.wrapStatusCode(() => validateEntity(entity) , HttpStatusCode.NOT_FOUND);
         // expand entity, if children is empty, expansion will return right away
-        await this.expandEntity(entity, expandTree.getChildren());
+        await this.expandEntity([entity], expandTree.getChildren());
         return entity;
     }
 

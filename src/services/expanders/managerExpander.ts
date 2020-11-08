@@ -21,22 +21,32 @@ export class ManagerExpander implements IManagerExpander, IExpander {
     }
 
     async expand(employees: Employee[]): Promise<Employee[]> {
-        const managers: Employee[] = [];
-        // get all the manager ids at once
-        const managerIds = employees.map(e => e.manager).filter(mId => mId !== undefined);
+        const managers = new Map<number, Employee>();
+        // get all the manager ids at once, avoid nulls or undefined, just numbers
+        const managerIds = employees.map(e => e.manager as number).filter(mId => mId);
         const uniqueManagerIds: number[] = [...new Set(managerIds)] as number[];
         // get all this level managers in one call to server
-        const managersRetrieved =  await this.employeeProvider.getByIds(uniqueManagerIds);
+        const managersRetrieved = await this.employeeProvider.getByIds(uniqueManagerIds) || [];
         // set each manager by looking into memory saved managers
         employees.forEach(employee => {
-            // look up manager linked to employee, and expand employee with manager data
-            const manager = managersRetrieved.find(m => m.id === employee.manager);
-            employee.manager = manager;
-            if (manager !== undefined) {
-                managers.push(manager);
+            let manager: Employee;
+            // if it is not null/undefined and not a number, entity was already expanded
+            if (employee.manager && typeof employee.manager !== "number") {
+                manager = employee.manager;
+            } else {
+                // look up manager linked to employee, and expand employee with manager data
+                manager = managersRetrieved.find(m => m.id === employee.manager);
+            }
+            // if null or undefined, keep as it is
+            if (manager) {
+                // assign existing or found
+                employee.manager = manager;
+                if (!managers.has(manager.id)) {
+                    managers.set(manager.id, manager);
+                }
             }
         });
         // return managers that were expanded to expand further if needed
-        return managers;
+        return  Array.from(managers.values());
     }
 }

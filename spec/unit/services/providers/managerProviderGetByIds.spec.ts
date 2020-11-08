@@ -32,6 +32,24 @@ export function executeGetByIds() {
             expect(returnedEmployees[1].first).toBe(employee2.first);
         });
 
+        it("should get empty if array is empty", async () => {
+            const returnedEmployees = await employeeProvider.getByIds([]);
+            // check basic office data
+            expect(returnedEmployees).toHaveSize(0);
+        });
+
+        it("should get empty if array is null", async () => {
+            const returnedEmployees = await employeeProvider.getByIds(null);
+            // check basic office data
+            expect(returnedEmployees).toHaveSize(0);
+        });
+
+        it("should get empty if array is null", async () => {
+            const returnedEmployees = await employeeProvider.getByIds(undefined);
+            // check basic office data
+            expect(returnedEmployees).toHaveSize(0);
+        });
+
         executeErrorSharedTests(() => {
             return {
                 testUrl: employeeUrl,

@@ -124,4 +124,13 @@ describe("Tree Expander Validator", () => {
             expect(error.errors[2]).toBe("manager cannot be expanded from office");
         }
     });
+
+    it("should expand single string", () => {
+        const tree = treeExpanderValidator.tryToParseToExpanderTree("manager.manager" as any, Expanders.employee);
+
+        expect(tree.size()).toBe(3);
+        expect(tree.getValue()).toBe(Expanders.employee);
+        expect(tree.getChild(Expanders.manager)).not.toBeUndefined();
+        expect(tree.getChild(Expanders.manager).getChild(Expanders.manager)).not.toBeUndefined();
+    });
 });

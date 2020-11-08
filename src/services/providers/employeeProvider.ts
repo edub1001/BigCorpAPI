@@ -22,6 +22,9 @@ export class EmployeeProvider implements IEmployeeProvider {
     }
 
     async getByIds(ids: number[]): Promise<Employee[]> {
+        if (!ids || ids.length === 0) {
+            return [];
+        }
         try {
             const response = await axios.get(config.employeesUrl, {
                 params: {

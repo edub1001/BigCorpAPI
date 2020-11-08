@@ -18,7 +18,7 @@ describe("Basic Employee Provider check", () => {
 
     it("should gracefully wrap error in service when using wrong url", async () => {
         config.employeesUrl = "http://invalid/"
-        expectAsync(employeeProvider.getById(1)).toBeRejectedWithError(ServicesError);
+        await expectAsync(employeeProvider.getById(1)).toBeRejectedWithError(ServicesError);
     });
 
     it("should return employee with id", async () => {

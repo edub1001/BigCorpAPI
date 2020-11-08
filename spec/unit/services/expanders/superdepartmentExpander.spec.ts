@@ -28,5 +28,11 @@ describe("Superdepartment expander", () => {
         expect(createInstance().expander.applyTo(Expanders.superdepartment)).toBeTrue();
     });
 
+    it("should expand from", () => {
+        const expandFrom = createInstance().expander.expandFrom();
+        expect(expandFrom).toContain(Expanders.department);
+        expect(expandFrom).toContain(Expanders.superdepartment);
+    });
+
     executeSharedTests(createInstance);
 });

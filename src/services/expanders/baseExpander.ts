@@ -43,8 +43,8 @@ export abstract class BaseExpander<T extends BaseEntity> {
                     }
                 }
             }
-            // already an object different to int, consider it expanded already
-            else {
+            // already an object different to int, consider it expanded already. Avoid null or undefined
+            else if (entityToExpand[propertyToExpand]) {
                 objectsExpanded.set(entityToExpand[propertyToExpand].id, entityToExpand[propertyToExpand]);
             }
         }

@@ -30,5 +30,11 @@ describe("Office expander", () => {
         expect(createInstance().expander.applyTo(Expanders.office)).toBeTrue();
     });
 
+    it("should expand from", () => {
+        const expandFrom = createInstance().expander.expandFrom();
+        expect(expandFrom).toContain(Expanders.employee);
+        expect(expandFrom).toContain(Expanders.manager);
+    });
+
     executeSharedTests(createInstance);
 });

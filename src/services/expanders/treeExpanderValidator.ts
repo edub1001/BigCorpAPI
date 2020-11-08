@@ -12,6 +12,10 @@ export class ExpanderTreeValidator {
     }
 
     tryToParseToExpanderTree(expand: string[], rootNode:Expanders): Tree<Expanders> {
+        // make sure it is an array and not a single string
+        if (!Array.isArray(expand)) {
+            expand = [expand];
+        }
         const errors = [];
         const expanderTree = new Tree<Expanders>(rootNode);
         if (expand !== undefined) {

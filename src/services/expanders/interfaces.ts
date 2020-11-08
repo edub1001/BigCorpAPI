@@ -14,18 +14,18 @@ export interface IExpanderFactory {
 }
 
 
-export interface IManagerExpander {
+export interface IManagerExpander extends IExpander {
     expand(employees: Employee[]) : Promise<Employee[]>;
 }
 
-export interface IDepartmentExpander {
+export interface IDepartmentExpander extends IExpander {
     expand(employees: Employee[]) : Promise<Department[]>;
 }
 
-export interface IOfficeExpander {
+export interface IOfficeExpander extends IExpander {
     expand(employees: Employee[]) : Promise<Office[]>;
 }
 
-export interface ISuperdepartmentExpander {
+export interface ISuperdepartmentExpander extends IExpander {
     expand(employees: Department[]) : Promise<Department[]>;
 }
