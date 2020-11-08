@@ -21,6 +21,11 @@ describe("Error middleware", () => {
         response.setup(x => x.status(It.IsAny())).returns(response.object());
     });
 
+    it("should call next", () => {
+        errorMiddleware(error, request.object(), response.object(), next.object())
+        next.verify(x => x(error), Times.Exactly(1));
+    });
+
     describe('when wrapping http status code', () => {
         it("should set status to the one set by controller", () => {
             (error as any).statusCode = HttpStatusCode.BAD_REQUEST;
