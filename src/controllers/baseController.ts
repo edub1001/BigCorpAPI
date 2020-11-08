@@ -66,7 +66,7 @@ export abstract class BaseController<T extends BaseEntity> {
             // use factory that will handle the expansion
             const expander = this.expanderFactory.getExpander(expandCategory.getValue());
             const expandedEntities = await expander.expand(entitiesToExpand);
-            this.expandEntity(expandedEntities, expandCategory.getChildren());
+            await this.expandEntity(expandedEntities, expandCategory.getChildren());
         }
     }
 }
