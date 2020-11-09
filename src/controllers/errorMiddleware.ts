@@ -12,33 +12,34 @@ import { HttpStatusCode } from "./baseController";
  *               error:
  *                   description: The error code given by the app
  *                   type: string
- *               message:
+ *               messages:
  *                   description: A more detailed description of the error
  *                   type: array | string
  *                   items: string
  *           example:
  *               error: UNEXPECTED_ERROR
- *               message: "Please contact system admin"
+ *               messages: "Please contact system admin"
  */
 export class AppError {
+    constructor(error:string, messages: string | string[]) {
+        this.error = error;
+        this.messages = messages;
+        if (Array.isArray(messages) && messages.length === 1) {
+            this.messages = messages[0];
+        }
+    }
     error: string;
-    message: string[];
+    messages: string | string[];
 }
 
 // tslint:disable: no-string-literal
 export function errorMiddleware(error: any, request: Request, response: Response, next: NextFunction) {
     if (error instanceof ServicesError && error["statusCode"] !== undefined) {
-        response.status(error["statusCode"]).json({
-            "error": ErrorCodes[error.errorCode],
-            "message": error.errors
-        });
+        response.status(error["statusCode"]).json(new AppError(ErrorCodes[error.errorCode], error.errors));
     }
     else {
         // check amount of info you want to disclosure to client
-        response.status(HttpStatusCode.INTERNAL_SERVER).json({
-            "error" : "UNEXPECTED_ERROR",
-            "message": error.message
-        });
+        response.status(HttpStatusCode.INTERNAL_SERVER).json(new AppError("UNEXPECTED_ERROR", error.message));
     }
     next(error);
 }

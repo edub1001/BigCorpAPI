@@ -34,7 +34,7 @@ export function addEmployeeRoutes(router: Router) {
      *             type: string
      *          responses:
      *           200:
-     *             description: OK. List of employees matching criteria
+     *             description: OK. List of employees matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
      *             content:
      *               application/json:
      *                 schema:
@@ -91,7 +91,7 @@ export function addEmployeeRoutes(router: Router) {
      *             type: string
      *          responses:
      *           200:
-     *             description: OK. Single employee matching criteria
+     *             description: OK. Single employee matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
      *             content:
      *               application/json:
      *                 schema:

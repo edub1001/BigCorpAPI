@@ -1,7 +1,7 @@
 {
   "name": "bigcorpapi",
   "version": "1.0.0",
-  "description": "Employee API to return expanded data related to office, departments and managers",
+  "description": "Big Corp API to provide offices, departments and employees resources with the ability to expand relationships such as office, departments, superdepartments and managers",
   "main": "./src/server.js",
   "scripts": {
     "rimraf": "./node_modules/rimraf/bin.js",

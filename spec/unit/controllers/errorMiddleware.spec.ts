@@ -34,7 +34,7 @@ describe("Error middleware", () => {
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.BAD_REQUEST), Times.Exactly(1));
             response.verify(x => x.json(It.Is<any>(v => {
-                return v.error === "ID_ERROR" && v.message.length === 0;
+                return v.error === "ID_ERROR" && v.messages.length === 0;
             })), Times.Exactly(1));
         });
 
@@ -46,7 +46,7 @@ describe("Error middleware", () => {
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
             response.verify(x => x.json(It.Is<any>(v => {
-                return v.error === "EMPLOYEE_PROVIDER_ERROR_RESPONSE" && v.message.length === 0;
+                return v.error === "EMPLOYEE_PROVIDER_ERROR_RESPONSE" && v.messages.length === 0;
             })), Times.Exactly(1));
         });
 
@@ -60,8 +60,20 @@ describe("Error middleware", () => {
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
             response.verify(x => x.json(It.Is<any>(v => {
-                return v.error === "FACTORY_MISSING_EXPANDERS" && v.message.length === 2
-                &&  v.message[0] === "Missing factory 1" && v.message[1] === "Missing factory 2";
+                return v.error === "FACTORY_MISSING_EXPANDERS" && v.messages.length === 2
+                &&  v.messages[0] === "Missing factory 1" && v.messages[1] === "Missing factory 2";
+            })), Times.Exactly(1));
+        });
+
+        it("should convert array of lenght 1 to simple string", () => {
+            (error as any).statusCode = HttpStatusCode.BAD_REQUEST;
+            error.errors.push("Single error");
+
+            errorMiddleware(error, request.object(), response.object(), next.object())
+            // set status to specified one
+            response.verify(x => x.status(HttpStatusCode.BAD_REQUEST), Times.Exactly(1));
+            response.verify(x => x.json(It.Is<any>(v => {
+                return v.error === "ID_ERROR" && v.messages === "Single error";
             })), Times.Exactly(1));
         });
     });
@@ -73,7 +85,7 @@ describe("Error middleware", () => {
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
             response.verify(x => x.json(It.Is<any>(v => {
-                return v.error === "UNEXPECTED_ERROR" && v.message === "Fatal error";
+                return v.error === "UNEXPECTED_ERROR" && v.messages === "Fatal error";
             })), Times.Exactly(1));
         });
     });
@@ -85,7 +97,7 @@ describe("Error middleware", () => {
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
             response.verify(x => x.json(It.Is<any>(v => {
-                return v.error === "UNEXPECTED_ERROR"  && v.message === "Not sent by services";
+                return v.error === "UNEXPECTED_ERROR"  && v.messages === "Not sent by services";
             })), Times.Exactly(1));
         });
     });

@@ -33,7 +33,7 @@ export function addDepartmentRoutes(router: Router) {
      *             type: string
      *          responses:
      *           200:
-     *             description: OK. List of departments matching criteria
+     *             description: OK. List of departments matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
      *             content:
      *               application/json:
      *                 schema:
@@ -89,7 +89,7 @@ export function addDepartmentRoutes(router: Router) {
      *             type: string
      *          responses:
      *           200:
-     *             description: OK. Single department matching criteria
+     *             description: OK. Single department matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
      *             content:
      *               application/json:
      *                 schema:
