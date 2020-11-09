@@ -14,7 +14,7 @@ export class EmployeeController extends BaseController<Employee> {
     constructor(
         @inject(PROVIDERS_TYPES.IEmployeeProvider) employeeProvider: IEmployeeProvider,
         @inject(EXPANDERS_TYPES.IExpanderFactory) expanderFactory: IExpanderFactory,
-        @inject(EXPANDERS_TYPES.ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
+        @inject(ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
         super(employeeProvider, expanderFactory, expanderTreeValidator, Expanders.employee);
     }
 }

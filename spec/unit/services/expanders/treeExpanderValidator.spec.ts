@@ -17,6 +17,13 @@ describe("Tree Expander Validator", () => {
         treeExpanderValidator = new ExpanderTreeValidator(expanderFactory.object());
     });
 
+    it("should return empty when undefined", () => {
+        const tree = treeExpanderValidator.tryToParseToExpanderTree(undefined, Expanders.employee);
+        expect(tree.size()).toBe(1);
+        expect(tree.getValue()).toBe(Expanders.employee);
+        expect(tree.getChildren()).toEqual([]);
+    });
+
     it("should not allow values other than valid expanders", () => {
         try {
             treeExpanderValidator.tryToParseToExpanderTree(["invalidValue.manager", "department.anotherInvalid"], Expanders.employee);

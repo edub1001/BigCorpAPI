@@ -83,6 +83,14 @@ export function executeSharedTests<T extends BaseEntity>(
             }
         });
 
+        it("should convert string number to its value", async () => {
+            providerMock.setup(x => x.getById(entities[0].id)).returns(Promise.resolve(entities[0]));
+            const entitiesExpandedReturned = await controller.getEntity("1", undefined);
+            // assert, should call expand with entities to expand in tree
+            providerMock.verify(x => x.getById(1), Times.Exactly(1));
+            expect(entitiesExpandedReturned).toBe(entities[0]);
+        });
+
         it("should expand several levels", async () => {
             entities[0][propertyName] = 2;
             entities[1][propertyName] = 3;
@@ -166,6 +174,22 @@ export function executeSharedTests<T extends BaseEntity>(
                 // tslint:disable-next-line: no-string-literal
                 expect(error["statusCode"]).toBe(HttpStatusCode.BAD_REQUEST);
             }
+        });
+
+        it("should convert string number to its value", async () => {
+            providerMock.setup(x => x.getAll(1,2)).returns(Promise.resolve([entities[0]]));
+            const entitiesExpandedReturned = await controller.getEntities("1", "2", undefined);
+            // assert, should call expand with entities to expand in tree
+            providerMock.verify(x => x.getAll(1,2), Times.Exactly(1));
+            expect(entitiesExpandedReturned).toEqual([entities[0]]);
+        });
+
+        it("should have default limit 100 & offset 0", async () => {
+            providerMock.setup(x => x.getAll(100,0)).returns(Promise.resolve([entities[0]]));
+            const entitiesExpandedReturned = await controller.getEntities(undefined, undefined, undefined);
+
+            providerMock.verify(x => x.getAll(100,0), Times.Exactly(1));
+            expect(entitiesExpandedReturned).toEqual([entities[0]]);
         });
 
         it("should expand several levels", async () => {

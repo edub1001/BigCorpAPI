@@ -14,7 +14,7 @@ export class OfficeController extends BaseController<Office> {
     constructor(
         @inject(PROVIDERS_TYPES.IOfficeProvider) officeProvider: IOfficeProvider,
         @inject(EXPANDERS_TYPES.IExpanderFactory) expanderFactory: IExpanderFactory,
-        @inject(EXPANDERS_TYPES.ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
+        @inject(ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
         super(officeProvider, expanderFactory, expanderTreeValidator, Expanders.office);
     }
 }

@@ -30,11 +30,11 @@ container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(ManagerExpander);
 container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(OfficeExpander);
 container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(SuperdepartmentExpander);
 container.bind<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory).to(ExpanderFactory).inSingletonScope();
-container.bind<ExpanderTreeValidator>(EXPANDERS_TYPES.ExpanderTreeValidator).to(ExpanderTreeValidator);
+container.bind<ExpanderTreeValidator>(ExpanderTreeValidator).toSelf();
 
-container.bind<EmployeeController>("EmployeeController").to(EmployeeController);
-container.bind<OfficeController>("OfficeController").to(OfficeController);
-container.bind<DepartmentController>("DepartmentController").to(DepartmentController);
+container.bind<EmployeeController>(EmployeeController).toSelf();
+container.bind<OfficeController>(OfficeController).toSelf();
+container.bind<DepartmentController>(DepartmentController).toSelf();
 
 export { container };
 

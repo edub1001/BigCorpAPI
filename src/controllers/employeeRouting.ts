@@ -58,12 +58,12 @@ export function addEmployeeRoutes(router: Router) {
      *                      $ref: '#/components/schemas/AppError'
      */
     router.get('/employees', async (req, res) => {
-        const employeeController = container.get<EmployeeController>("EmployeeController");
+        const employeeController = container.get<EmployeeController>(EmployeeController);
         const limit = req.query.limit;
         const offset = req.query.offset;
         const expanders = req.query.expand as string[];
         const employees = await employeeController.getEntities(limit, offset, expanders);
-        res.status(HttpStatusCode.OK).send(employees);
+        res.status(HttpStatusCode.OK).json(employees);
     });
 
     /**
@@ -118,10 +118,10 @@ export function addEmployeeRoutes(router: Router) {
      *                      $ref: '#/components/schemas/AppError'
      */
     router.get('/employees/:id', async (req, res) => {
-        const employeeController = container.resolve(EmployeeController);
+        const employeeController = container.get<EmployeeController>(EmployeeController);
         const id = req.params.id;
         const expanders = req.query.expand as string[];
         const employee = await employeeController.getEntity(id, expanders);
-        res.status(HttpStatusCode.OK).send(employee);
+        res.status(HttpStatusCode.OK).json(employee);
     });
 }

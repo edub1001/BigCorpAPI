@@ -28,14 +28,14 @@ export class AppError {
 // tslint:disable: no-string-literal
 export function errorMiddleware(error: any, request: Request, response: Response, next: NextFunction) {
     if (error instanceof ServicesError && error["statusCode"] !== undefined) {
-        response.status(error["statusCode"]).send({
+        response.status(error["statusCode"]).json({
             "error": ErrorCodes[error.errorCode],
             "message": error.errors
         });
     }
     else {
         // check amount of info you want to disclosure to client
-        response.status(HttpStatusCode.INTERNAL_SERVER).send({
+        response.status(HttpStatusCode.INTERNAL_SERVER).json({
             "error" : "UNEXPECTED_ERROR",
             "message": error.message
         });

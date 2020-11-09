@@ -14,7 +14,7 @@ export class DepartmentController extends BaseController<Department> {
     constructor(
         @inject(PROVIDERS_TYPES.IDepartmentProvider) departmentProvider: IDepartmentProvider,
         @inject(EXPANDERS_TYPES.IExpanderFactory) expanderFactory: IExpanderFactory,
-        @inject(EXPANDERS_TYPES.ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
+        @inject(ExpanderTreeValidator) expanderTreeValidator: ExpanderTreeValidator) {
         super(departmentProvider, expanderFactory, expanderTreeValidator, Expanders.department);
     }
 }

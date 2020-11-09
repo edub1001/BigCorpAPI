@@ -35,7 +35,7 @@ describe("Dependency injection", () => {
     });
 
     it("should resolve expanders", () => {
-        expect(container.get<ExpanderTreeValidator>(EXPANDERS_TYPES.ExpanderTreeValidator)).toBeInstanceOf(ExpanderTreeValidator);
+        expect(container.get<ExpanderTreeValidator>(ExpanderTreeValidator)).toBeInstanceOf(ExpanderTreeValidator);
         const expanderFactory = container.get<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory);
         const expanderFactory2 = container.get<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory);
         expect(expanderFactory).toBeInstanceOf(ExpanderFactory);
@@ -50,8 +50,8 @@ describe("Dependency injection", () => {
     });
 
     it("should resolve controllers", () => {
-        expect(container.get<EmployeeController>("EmployeeController")).toBeInstanceOf(EmployeeController);
-        expect(container.get<OfficeController>("OfficeController")).toBeInstanceOf(OfficeController);
-        expect(container.get<DepartmentController>("DepartmentController")).toBeInstanceOf(DepartmentController);
+        expect(container.get<EmployeeController>(EmployeeController)).toBeInstanceOf(EmployeeController);
+        expect(container.get<OfficeController>(OfficeController)).toBeInstanceOf(OfficeController);
+        expect(container.get<DepartmentController>(DepartmentController)).toBeInstanceOf(DepartmentController);
     });
 });

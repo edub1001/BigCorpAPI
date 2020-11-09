@@ -12,13 +12,13 @@ export class ExpanderTreeValidator {
     }
 
     tryToParseToExpanderTree(expand: string[], rootNode:Expanders): Tree<Expanders> {
-        // make sure it is an array and not a single string
-        if (!Array.isArray(expand)) {
-            expand = [expand];
-        }
         const errors = [];
         const expanderTree = new Tree<Expanders>(rootNode);
-        if (expand !== undefined) {
+        if (expand) {
+            // make sure it is an array and not a single string
+            if (!Array.isArray(expand)) {
+                expand = [expand];
+            }
             expand.forEach(expandString => {
                 let node = expanderTree as TreeBase<Expanders>;
                 for (const expandStringTerm of expandString.split(".")) {

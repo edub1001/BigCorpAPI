@@ -50,11 +50,11 @@ export function addOfficeRoutes(router: Router) {
      *                      $ref: '#/components/schemas/AppError'
      */
     router.get('/offices', async (req, res) => {
-        const officeController = container.get<OfficeController>("OfficeController");
+        const officeController = container.get<OfficeController>(OfficeController);
         const limit = req.query.limit;
         const offset = req.query.offset;
         const offices = await officeController.getEntities(limit, offset);
-        res.status(HttpStatusCode.OK).send(offices);
+        res.status(HttpStatusCode.OK).json(offices);
     });
 
     /**
@@ -100,9 +100,9 @@ export function addOfficeRoutes(router: Router) {
      *                      $ref: '#/components/schemas/AppError'
      */
     router.get('/offices/:id', async (req, res) => {
-        const officeController = container.resolve(OfficeController);
+        const officeController = container.get<OfficeController>(OfficeController);
         const id = req.params.id;
         const office = await officeController.getEntity(id);
-        res.status(HttpStatusCode.OK).send(office);
+        res.status(HttpStatusCode.OK).json(office);
     });
 }

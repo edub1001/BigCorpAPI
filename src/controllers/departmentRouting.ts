@@ -57,12 +57,12 @@ export function addDepartmentRoutes(router: Router) {
      *                      $ref: '#/components/schemas/AppError'
      */
     router.get('/departments', async (req, res) => {
-        const departmentController = container.get<DepartmentController>("DepartmentController");
+        const departmentController = container.get<DepartmentController>(DepartmentController);
         const limit = req.query.limit;
         const offset = req.query.offset;
         const expanders = req.query.expand as string[];
         const departments = await departmentController.getEntities(limit, offset, expanders);
-        res.status(HttpStatusCode.OK).send(departments);
+        res.status(HttpStatusCode.OK).json(departments);
     });
 
     /**
@@ -116,10 +116,10 @@ export function addDepartmentRoutes(router: Router) {
      *                      $ref: '#/components/schemas/AppError'
      */
     router.get('/departments/:id', async (req, res) => {
-        const departmentController = container.resolve(DepartmentController);
+        const departmentController = container.get<DepartmentController>(DepartmentController);
         const id = req.params.id;
         const expanders = req.query.expand as string[];
         const department = await departmentController.getEntity(id, expanders);
-        res.status(HttpStatusCode.OK).send(department);
+        res.status(HttpStatusCode.OK).json(department);
     });
 }

@@ -17,7 +17,7 @@ describe("Error middleware", () => {
         request = new Mock<Request>();
         response = new Mock<Response>();
         next = new Mock<NextFunction>();
-        response.setup(x => x.send(It.IsAny())).returns(response.object());
+        response.setup(x => x.json(It.IsAny())).returns(response.object());
         response.setup(x => x.status(It.IsAny())).returns(response.object());
     });
 
@@ -33,8 +33,8 @@ describe("Error middleware", () => {
             errorMiddleware(error, request.object(), response.object(), next.object())
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.BAD_REQUEST), Times.Exactly(1));
-            response.verify(x => x.send(It.Is(v => {
-                return (v as any).error === "ID_ERROR" && (v as any).message.length === 0;
+            response.verify(x => x.json(It.Is<any>(v => {
+                return v.error === "ID_ERROR" && v.message.length === 0;
             })), Times.Exactly(1));
         });
 
@@ -45,8 +45,8 @@ describe("Error middleware", () => {
             errorMiddleware(error, request.object(), response.object(), next.object())
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
-            response.verify(x => x.send(It.Is(v => {
-                return (v as any).error === "EMPLOYEE_PROVIDER_ERROR_RESPONSE" && (v as any).message.length === 0;
+            response.verify(x => x.json(It.Is<any>(v => {
+                return v.error === "EMPLOYEE_PROVIDER_ERROR_RESPONSE" && v.message.length === 0;
             })), Times.Exactly(1));
         });
 
@@ -59,10 +59,9 @@ describe("Error middleware", () => {
             errorMiddleware(error, request.object(), response.object(), next.object())
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
-            response.verify(x => x.send(It.Is(v => {
-                const returnedError = (v as any);
-                return returnedError.error === "FACTORY_MISSING_EXPANDERS" && returnedError.message.length === 2
-                &&  returnedError.message[0] === "Missing factory 1" && returnedError.message[1] === "Missing factory 2";
+            response.verify(x => x.json(It.Is<any>(v => {
+                return v.error === "FACTORY_MISSING_EXPANDERS" && v.message.length === 2
+                &&  v.message[0] === "Missing factory 1" && v.message[1] === "Missing factory 2";
             })), Times.Exactly(1));
         });
     });
@@ -73,8 +72,8 @@ describe("Error middleware", () => {
             errorMiddleware(serviceError, request.object(), response.object(), next.object())
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
-            response.verify(x => x.send(It.Is(v => {
-                return (v as any).error === "UNEXPECTED_ERROR" && (v as any).message === "Fatal error";
+            response.verify(x => x.json(It.Is<any>(v => {
+                return v.error === "UNEXPECTED_ERROR" && v.message === "Fatal error";
             })), Times.Exactly(1));
         });
     });
@@ -85,9 +84,8 @@ describe("Error middleware", () => {
             errorMiddleware(notServiceError, request.object(), response.object(), next.object())
             // set status to specified one
             response.verify(x => x.status(HttpStatusCode.INTERNAL_SERVER), Times.Exactly(1));
-            response.verify(x => x.send(It.Is(v => {
-                const returnedError = (v as any);
-                return returnedError.error === "UNEXPECTED_ERROR"  && returnedError.message === "Not sent by services";
+            response.verify(x => x.json(It.Is<any>(v => {
+                return v.error === "UNEXPECTED_ERROR"  && v.message === "Not sent by services";
             })), Times.Exactly(1));
         });
     });
