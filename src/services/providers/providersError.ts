@@ -1,0 +1,4 @@
+export enum ProvidersErrorCodes {
+    EMPLOYEE_PROVIDER_MISSING_CONFIG = 201,
+    EMPLOYEE_PROVIDER_ERROR_RESPONSE = 202
+}

@@ -6,6 +6,7 @@ import { Expanders } from "./expanders";
 export interface IExpander {
     expand(itemsToExpand : any) : any;
     applyTo(expander:Expanders) : boolean;
+    expandFrom() : Expanders[];
 }
 
 export interface IExpanderFactory {
@@ -13,18 +14,18 @@ export interface IExpanderFactory {
 }
 
 
-export interface IManagerExpander {
-    expand(employees: Employee[]) : Employee[];
+export interface IManagerExpander extends IExpander {
+    expand(employees: Employee[]) : Promise<Employee[]>;
 }
 
-export interface IDepartmentExpander {
-    expand(employees: Employee[]) : Department[];
+export interface IDepartmentExpander extends IExpander {
+    expand(employees: Employee[]) : Promise<Department[]>;
 }
 
-export interface IOfficeExpander {
-    expand(employees: Employee[]) : Office[];
+export interface IOfficeExpander extends IExpander {
+    expand(employees: Employee[]) : Promise<Office[]>;
 }
 
-export interface ISuperdepartmentExpander {
-    expand(employees: Department[]) : Department[];
+export interface ISuperdepartmentExpander extends IExpander {
+    expand(employees: Department[]) : Promise<Department[]>;
 }

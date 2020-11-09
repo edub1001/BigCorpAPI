@@ -1,17 +1,20 @@
 import { Container } from "inversify";
+import { DepartmentController } from "./controllers/departmentController";
 import { EmployeeController } from "./controllers/employeeController";
-import { DepartmentProvider } from "./providers/departmentProvider";
-import { EmployeeProvider } from "./providers/employeeProvider";
-import { IDepartmentProvider, IEmployeeProvider, IOfficeProvider } from "./providers/interfaces";
-import { OfficeProvider } from "./providers/officeProvider";
-import { PROVIDERS_TYPES } from "./providers/types";
+import { OfficeController } from "./controllers/officeController";
 import { DepartmentExpander } from "./services/expanders/departmentExpander";
 import { ExpanderFactory } from "./services/expanders/expanderFactory";
 import { IExpander, IExpanderFactory } from "./services/expanders/interfaces";
 import { ManagerExpander } from "./services/expanders/managerExpander";
 import { OfficeExpander } from "./services/expanders/officeExpander";
 import { SuperdepartmentExpander } from "./services/expanders/superdepartmentExpander";
+import { ExpanderTreeValidator } from "./services/expanders/treeExpanderValidator";
 import { EXPANDERS_TYPES } from "./services/expanders/types";
+import { DepartmentProvider } from "./services/providers/departmentProvider";
+import { EmployeeProvider } from "./services/providers/employeeProvider";
+import { IDepartmentProvider, IEmployeeProvider, IOfficeProvider } from "./services/providers/interfaces";
+import { OfficeProvider } from "./services/providers/officeProvider";
+import { PROVIDERS_TYPES } from "./services/providers/types";
 
 
 
@@ -27,7 +30,11 @@ container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(ManagerExpander);
 container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(OfficeExpander);
 container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(SuperdepartmentExpander);
 container.bind<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory).to(ExpanderFactory).inSingletonScope();
+container.bind<ExpanderTreeValidator>(ExpanderTreeValidator).toSelf();
 
-container.bind<EmployeeController>("EmployeeController").to(EmployeeController);
+container.bind<EmployeeController>(EmployeeController).toSelf();
+container.bind<OfficeController>(OfficeController).toSelf();
+container.bind<DepartmentController>(DepartmentController).toSelf();
 
 export { container };
+

@@ -1,11 +1,11 @@
+import offices from "../../../config/offices.json";
 import { injectable } from "inversify";
-import { Office } from "../models/office";
 import { BaseProvider } from "./baseProvider";
 import { IOfficeProvider } from "./interfaces";
-import * as offices from "./offices.json";
+import { Office } from "../../models/office";
 
 @injectable()
-export class OfficeProvider extends BaseProvider implements IOfficeProvider {
+export class OfficeProvider extends BaseProvider<Office> implements IOfficeProvider {
     constructor() {
         super(offices);
     }
