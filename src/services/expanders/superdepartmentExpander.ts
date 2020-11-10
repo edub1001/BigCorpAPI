@@ -7,7 +7,7 @@ import { Expanders } from "./expanders";
 import { IExpander, ISuperdepartmentExpander } from "./interfaces";
 
 /**
- * Class to expand departments in an array of employees
+ * Class to expand superdepartments in an array of departments. It might receive any as per IExpander firm providing property name is mantained
  */
 @injectable()
 export class SuperdepartmentExpander extends BaseExpander<Department> implements ISuperdepartmentExpander, IExpander {
@@ -29,8 +29,10 @@ export class SuperdepartmentExpander extends BaseExpander<Department> implements
 
     /**
      * Return which expander we can expand from
+     * @returns An array of expanders that we can expand from
      */
     expandFrom(): Expanders[] {
+        // use for validation but it can help in the future to expand different field names into departments
         return [Expanders.department, Expanders.superdepartment];
     }
 
@@ -40,7 +42,7 @@ export class SuperdepartmentExpander extends BaseExpander<Department> implements
      * @returns An array of unique department objects expanded in the departments passed
      */
     async expand(departments: Department[]): Promise<Department[]> {
-        // safe check property superdepartment at compilation
+        // safe check property superdepartment at compilation, it is the property we want to expand
         const propertyOf = <T>(name: keyof T) => name;
         return await super.expand(departments, propertyOf<Department>("superdepartment"));
     }

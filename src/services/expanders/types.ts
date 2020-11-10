@@ -1,3 +1,4 @@
+// symbol for providers injection
 const EXPANDERS_TYPES = {
     IDepartmentExpander: Symbol.for("IDepartmentExpander"),
     IManagerExpander: Symbol.for("IManagerExpander"),

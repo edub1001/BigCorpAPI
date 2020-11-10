@@ -1,7 +1,8 @@
+import { Container } from "inversify";
 import { DepartmentController } from "../../src/controllers/departmentController";
 import { EmployeeController } from "../../src/controllers/employeeController";
 import { OfficeController } from "../../src/controllers/officeController";
-import { container } from "../../src/inversify.config";
+import { getContainer } from "../../src/inversify.config";
 import { DepartmentExpander } from "../../src/services/expanders/departmentExpander";
 import { ExpanderFactory } from "../../src/services/expanders/expanderFactory";
 import { Expanders } from "../../src/services/expanders/expanders";
@@ -18,6 +19,12 @@ import { OfficeProvider } from "../../src/services/providers/officeProvider";
 import { PROVIDERS_TYPES } from "../../src/services/providers/types";
 
 describe("Dependency injection", () => {
+    let container: Container;
+
+    beforeAll(() => {
+        container = getContainer();
+    });
+
     it("should resolve providers", () => {
         expect(container.get<IEmployeeProvider>(PROVIDERS_TYPES.IEmployeeProvider)).toBeInstanceOf(EmployeeProvider);
         const departmentProvider = container.get<IDepartmentProvider>(PROVIDERS_TYPES.IDepartmentProvider);

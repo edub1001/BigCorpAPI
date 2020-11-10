@@ -1,3 +1,4 @@
+// symbol for providers injection
 const PROVIDERS_TYPES = {
     IOfficeProvider: Symbol.for("IOfficeProvider"),
     IDepartmentProvider: Symbol.for("IDepartmentProvider"),

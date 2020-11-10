@@ -8,7 +8,7 @@ import { Expanders } from "./expanders";
 import { IExpander, IOfficeExpander } from "./interfaces";
 
 /**
- * Class to expand offices in an array of employees
+ * Class to expand offices in an array of employees. It might receive any as per IExpander firm providing property name is mantained
  */
 @injectable()
 export class OfficeExpander extends BaseExpander<Office> implements IOfficeExpander, IExpander {
@@ -30,6 +30,7 @@ export class OfficeExpander extends BaseExpander<Office> implements IOfficeExpan
 
     /**
      * Return which expander we can expand from
+     * @returns An array of expanders that we can expand from
      */
     expandFrom(): Expanders[] {
         return [Expanders.employee, Expanders.manager];

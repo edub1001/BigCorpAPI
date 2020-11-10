@@ -7,7 +7,7 @@
     "helpers/**/*.ts"
   ],
   "stopSpecOnExpectationFailure": false,
-  "random": true,
+  "random": false,
   "reporters": [
     {
       "name": "jasmine-spec-reporter#SpecReporter",

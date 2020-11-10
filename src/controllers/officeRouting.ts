@@ -1,5 +1,5 @@
 import { OfficeController } from "./officeController";
-import { container } from "../inversify.config";
+import { container } from "../app";
 import { HttpStatusCode } from "./baseController";
 import { Router } from "express";
 
@@ -19,12 +19,19 @@ export function addOfficeRoutes(router: Router) {
      *             description: Limit used to determine the number of offices to return. By default, limit is 100 and the max limit is 1000
      *             in: query
      *             required: false
-     *             type: integer
+     *             default: 100
+     *             schema:
+     *              type: integer
+     *              maximum: 1000
+     *              minimum: 1
      *           - name: offset
      *             description: Offset used to determine the index where in the list to start. By default, offset is 0 starting from the beginning
      *             in: query
      *             required: false
-     *             type: integer
+     *             default: 0
+     *             schema:
+     *              type: integer
+     *              minimum: 0
      *          responses:
      *           200:
      *             description: OK. List of offices matching criteria
@@ -72,7 +79,9 @@ export function addOfficeRoutes(router: Router) {
      *             description: Identifier for office looked for
      *             in: path
      *             required: true
-     *             type: integer
+     *             schema:
+     *              type: integer
+     *              minimum: 1
      *          responses:
      *           200:
      *             description: OK. Single office matching criteria
