@@ -16,27 +16,34 @@ export function addDepartmentRoutes(router: Router) {
      *           - application/json
      *          parameters:
      *           - name: limit
-     *             type: integer
-     *             format: int64
      *             description: Limit used to determine the number of departments to return. By default, limit is 100 and the max limit is 1000
      *             in: query
      *             required: false
      *             default: 100
-     *             maximum: 1000
+     *             schema:
+     *              type: integer
+     *              maximum: 1000
+     *              minimum: 1
      *           - name: offset
      *             description: Offset used to determine the index where in the list to start. By default, offset is 0 starting from the beginning
      *             in: query
      *             required: false
      *             default: 0
-     *             type: integer
+     *             schema:
+     *              type: integer
+     *              minimum: 0
      *           - name: expand
-     *             description: Expand is used to determine which properties in departments or its relationships to expand. There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments)
+     *             description: Expand is used to determine which properties in departments or its relationships to expand. Use dot to concatenate related expansions.
+     *              There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments)
      *             in: query
      *             required: false
-     *             type: array
-     *             items:
+     *             schema:
+     *              type: array
+     *              items:
      *                  type: string
-     *             collectionFormat: multi
+     *             style: form
+     *             explode: true
+     *             example: superdepartment.superdepartment
      *          responses:
      *           200:
      *             description: OK. List of departments matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
@@ -86,13 +93,21 @@ export function addDepartmentRoutes(router: Router) {
      *             description: Identifier for department looked for
      *             in: path
      *             required: true
-     *             type: integer
+     *             schema:
+     *              type: integer
+     *              minimum: 1
      *           - name: expand
-     *             description: Expand is used to determine which properties in departments or its relationships to expand. There is one relationship that can be expanded ->
-     *              superdepartment in  departments (expands to  departments)
+     *             description: Expand is used to determine which properties in departments or its relationships to expand. Use dot to concatenate related  expansions.
+     *              There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments)
      *             in: query
      *             required: false
-     *             type: string
+     *             schema:
+     *              type: array
+     *              items:
+     *                  type: string
+     *             style: form
+     *             explode: true
+     *             example: superdepartment.superdepartment
      *          responses:
      *           200:
      *             description: OK. Single department matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.

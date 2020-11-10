@@ -19,19 +19,32 @@ export function addEmployeeRoutes(router: Router) {
      *             description: Limit used to determine the number of employees to return. By default, limit is 100 and the max limit is 1000
      *             in: query
      *             required: false
-     *             type: integer
+     *             default: 100
+     *             schema:
+     *              type: integer
+     *              maximum: 1000
+     *              minimum: 1
      *           - name: offset
      *             description: Offset used to determine the index where in the list to start. By default, offset is 0 starting from the beginning
      *             in: query
      *             required: false
-     *             type: integer
+     *             default: 0
+     *             schema:
+     *              type: integer
+     *              minimum: 0
      *           - name: expand
-     *             description: Expand is used to determine which properties in employee or its relationships to expand. There are four relationships that can be expanded ->
+     *             description: Expand is used to determine which properties in employee or its relationships to expand. Use dot to concatenate related expansions. There are four relationships that can be expanded ->
      *              manager in  employees (expands to  employees); office  in  employees  (expands to  offices); department  in  employees  (expands to  departments);
      *              superdepartment in  departments (expands to  departments)
      *             in: query
      *             required: false
-     *             type: string
+     *             schema:
+     *              type: array
+     *              items:
+     *                  type: string
+     *             style: form
+     *             explode: true
+     *             example: department.superdepartment.superdepartment or manager.manager.office
      *          responses:
      *           200:
      *             description: OK. List of employees matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
@@ -81,14 +94,22 @@ export function addEmployeeRoutes(router: Router) {
      *             description: Identifier for employee looked for
      *             in: path
      *             required: true
-     *             type: integer
+     *             schema:
+     *              type: integer
+     *              minimum: 1
      *           - name: expand
-     *             description: Expand is used to determine which properties in employee or its relationships to expand. There are four relationships that can be expanded ->
+     *             description: Expand is used to determine which properties in employee or its relationships to expand. Use dot to concatenate related  expansions. There are four relationships that can be expanded ->
      *              manager in  employees (expands to  employees); office  in  employees  (expands to  offices); department  in  employees  (expands to  departments);
      *              superdepartment in  departments (expands to  departments)
      *             in: query
      *             required: false
-     *             type: string
+     *             schema:
+     *              type: array
+     *              items:
+     *                  type: string
+     *             style: form
+     *             explode: true
+     *             example: department.superdepartment.superdepartment or manager.manager.office
      *          responses:
      *           200:
      *             description: OK. Single employee matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
