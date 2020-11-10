@@ -16,6 +16,9 @@ import { IDepartmentProvider, IEmployeeProvider, IOfficeProvider } from "./servi
 import { OfficeProvider } from "./services/providers/officeProvider";
 import { PROVIDERS_TYPES } from "./services/providers/types";
 
+/**
+ * Create a new container with all the setup needed to run the app injecting controllers services
+ */
 function getContainer(): Container {
 
     const container = new Container();
@@ -32,6 +35,7 @@ function getContainer(): Container {
     container.bind<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory).to(ExpanderFactory).inSingletonScope();
     container.bind<ExpanderTreeValidator>(ExpanderTreeValidator).toSelf();
 
+    // bind controller objects to themselves
     container.bind<EmployeeController>(EmployeeController).toSelf();
     container.bind<OfficeController>(OfficeController).toSelf();
     container.bind<DepartmentController>(DepartmentController).toSelf();

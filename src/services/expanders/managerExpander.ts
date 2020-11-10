@@ -5,21 +5,38 @@ import { PROVIDERS_TYPES } from "../providers/types";
 import { IExpander, IManagerExpander } from "./interfaces";
 import { Expanders } from "./expanders";
 
+/**
+ * Class to expand managers in an array of employees. It might receive any as per IExpander firm providing property name is mantained
+ */
 @injectable()
 export class ManagerExpander implements IManagerExpander, IExpander {
+    /**
+     * Inject an IEmployeeProvider
+     * @param employeeProvider Employee provider that will return employee by ids
+     */
     constructor(@inject(PROVIDERS_TYPES.IEmployeeProvider) private employeeProvider: IEmployeeProvider) { }
 
+    /**
+     * If expand type matches manager
+     * @param expander Check Expander compatibility
+     */
     applyTo(expander: Expanders): boolean {
         return expander === Expanders.manager;
     }
 
     /**
      * Return which expander we can expand from
+     * @returns An array of expanders that we can expand from
      */
     expandFrom(): Expanders[] {
         return [Expanders.employee, Expanders.manager];
     }
 
+    /**
+     * Expand managers in objects employee passed by param
+     * @param employees An array of employees to expand office
+     * @returns An array of unique office objects expanded in the employees passed
+     */
     async expand(employees: Employee[]): Promise<Employee[]> {
         const managers = new Map<number, Employee>();
         // get all the manager ids at once, avoid nulls or undefined, just numbers

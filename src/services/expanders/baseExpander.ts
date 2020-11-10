@@ -34,7 +34,9 @@ export abstract class BaseExpander<T extends BaseEntity> {
                 else {
                     // go to provider
                     const objectExpanded = await this.provider.getById(entityToExpand[propertyToExpand]);
+                    // if object found by provider
                     if (objectExpanded !== undefined) {
+                        // expand it and save it to avoid provider and returning same object
                         entityToExpand[propertyToExpand] = objectExpanded;
                         objectsExpanded.set(objectExpanded.id, objectExpanded);
                     }
