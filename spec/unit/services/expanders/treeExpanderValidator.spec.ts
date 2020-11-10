@@ -140,4 +140,31 @@ describe("Tree Expander Validator", () => {
         expect(tree.getChild(Expanders.manager)).not.toBeUndefined();
         expect(tree.getChild(Expanders.manager).getChild(Expanders.manager)).not.toBeUndefined();
     });
+
+    /**
+     * employee -> manager    -> office
+     *                        -> department      -> superdepartment -> superdepartment
+     *          -> office
+     *          -> department -> superdepartment -> superdepartment
+     */
+    it("should expand manager, office and department", () => {
+        expanderMock.setup(x => x.expandFrom()).returns([Expanders.manager, Expanders.employee, Expanders.department, Expanders.office, Expanders.superdepartment]);
+        const tree = treeExpanderValidator.tryToParseToExpanderTree(["department.superdepartment.superdepartment", "manager.office", "office", "manager.department.superdepartment.superdepartment" ], Expanders.employee);
+        expect(tree.size()).toBe(5);
+        // 1 level
+        expect(tree.getValue()).toBe(Expanders.employee);
+        // 2 level
+        expect(tree.getChild(Expanders.manager)).not.toBeUndefined();
+        expect(tree.getChild(Expanders.office)).not.toBeUndefined();
+        expect(tree.getChild(Expanders.department)).not.toBeUndefined();
+        // 3 level
+        expect(tree.getChild(Expanders.manager).getChild(Expanders.office)).not.toBeUndefined();
+        expect(tree.getChild(Expanders.manager).getChild(Expanders.department)).not.toBeUndefined();
+        expect(tree.getChild(Expanders.department).getChild(Expanders.superdepartment)).not.toBeUndefined();
+        // 4 level
+        expect(tree.getChild(Expanders.manager).getChild(Expanders.department).getChild(Expanders.superdepartment)).not.toBeUndefined();
+        expect(tree.getChild(Expanders.department).getChild(Expanders.superdepartment).getChild(Expanders.superdepartment)).not.toBeUndefined();
+        // 5 level
+        expect(tree.getChild(Expanders.manager).getChild(Expanders.department).getChild(Expanders.superdepartment).getChild(Expanders.superdepartment)).not.toBeUndefined();
+    });
 });

@@ -1,5 +1,5 @@
 import { DepartmentController } from "./departmentController";
-import { container } from "../inversify.config";
+import { container } from "../app";
 import { HttpStatusCode } from "./baseController";
 import { Router } from "express";
 
@@ -16,21 +16,27 @@ export function addDepartmentRoutes(router: Router) {
      *           - application/json
      *          parameters:
      *           - name: limit
+     *             type: integer
+     *             format: int64
      *             description: Limit used to determine the number of departments to return. By default, limit is 100 and the max limit is 1000
      *             in: query
      *             required: false
-     *             type: integer
+     *             default: 100
+     *             maximum: 1000
      *           - name: offset
      *             description: Offset used to determine the index where in the list to start. By default, offset is 0 starting from the beginning
      *             in: query
      *             required: false
+     *             default: 0
      *             type: integer
      *           - name: expand
-     *             description: Expand is used to determine which properties in departments or its relationships to expand. There is one relationship that can be expanded ->
-     *              superdepartment in  departments (expands to  departments)
+     *             description: Expand is used to determine which properties in departments or its relationships to expand. There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments)
      *             in: query
      *             required: false
-     *             type: string
+     *             type: array
+     *             items:
+     *                  type: string
+     *             collectionFormat: multi
      *          responses:
      *           200:
      *             description: OK. List of departments matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.

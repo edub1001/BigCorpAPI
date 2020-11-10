@@ -40,6 +40,6 @@ export function errorMiddleware(error: any, request: Request, response: Response
     else {
         // check amount of info you want to disclosure to client
         response.status(HttpStatusCode.INTERNAL_SERVER).json(new AppError("UNEXPECTED_ERROR", error.message));
+        next(error);
     }
-    next(error);
 }

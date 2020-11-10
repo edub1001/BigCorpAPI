@@ -3,16 +3,16 @@ import { It, Mock, Times } from 'moq.ts';
 import request from 'supertest';
 import { app } from '../../../src/app';
 import { BaseController } from '../../../src/controllers/baseController';
-import { container } from "../../../src/inversify.config";
+import { container } from "../../../src/app";
 import { arraysEqual } from '../helper';
 
 export function executeSharedTests<T extends BaseController<any>>(controller: interfaces.Newable<T>, baseRoute: string, expandable:boolean = true) {
-    beforeAll(() => {
+    beforeEach(() => {
         // create a snapshot
         container.snapshot();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         container.restore();
     });
 

@@ -16,25 +16,28 @@ import { IDepartmentProvider, IEmployeeProvider, IOfficeProvider } from "./servi
 import { OfficeProvider } from "./services/providers/officeProvider";
 import { PROVIDERS_TYPES } from "./services/providers/types";
 
+function getContainer(): Container {
 
+    const container = new Container();
+    // bind all providers
+    container.bind<IEmployeeProvider>(PROVIDERS_TYPES.IEmployeeProvider).to(EmployeeProvider);
+    container.bind<IDepartmentProvider>(PROVIDERS_TYPES.IDepartmentProvider).to(DepartmentProvider).inSingletonScope();;
+    container.bind<IOfficeProvider>(PROVIDERS_TYPES.IOfficeProvider).to(OfficeProvider).inSingletonScope();;
 
-const container = new Container();
-// bind all providers
-container.bind<IEmployeeProvider>(PROVIDERS_TYPES.IEmployeeProvider).to(EmployeeProvider);
-container.bind<IDepartmentProvider>(PROVIDERS_TYPES.IDepartmentProvider).to(DepartmentProvider).inSingletonScope();;
-container.bind<IOfficeProvider>(PROVIDERS_TYPES.IOfficeProvider).to(OfficeProvider).inSingletonScope();;
+    // bind all expanders
+    container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(DepartmentExpander);
+    container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(ManagerExpander);
+    container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(OfficeExpander);
+    container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(SuperdepartmentExpander);
+    container.bind<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory).to(ExpanderFactory).inSingletonScope();
+    container.bind<ExpanderTreeValidator>(ExpanderTreeValidator).toSelf();
 
-// bind all expanders
-container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(DepartmentExpander);
-container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(ManagerExpander);
-container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(OfficeExpander);
-container.bind<IExpander>(EXPANDERS_TYPES.IExpander).to(SuperdepartmentExpander);
-container.bind<IExpanderFactory>(EXPANDERS_TYPES.IExpanderFactory).to(ExpanderFactory).inSingletonScope();
-container.bind<ExpanderTreeValidator>(ExpanderTreeValidator).toSelf();
+    container.bind<EmployeeController>(EmployeeController).toSelf();
+    container.bind<OfficeController>(OfficeController).toSelf();
+    container.bind<DepartmentController>(DepartmentController).toSelf();
 
-container.bind<EmployeeController>(EmployeeController).toSelf();
-container.bind<OfficeController>(OfficeController).toSelf();
-container.bind<DepartmentController>(DepartmentController).toSelf();
+    return container;
+}
 
-export { container };
+export { getContainer };
 

@@ -1,5 +1,5 @@
 import { EmployeeController } from "./employeeController";
-import { container } from "../inversify.config";
+import { container } from "../app";
 import { HttpStatusCode } from "./baseController";
 import { Router } from "express";
 

@@ -1,0 +1,172 @@
+{
+  "employee46Expanded": {
+    "first": "Douglas",
+    "last": "Simmons",
+    "id": 46,
+    "manager": {
+      "first": "Thomas",
+      "last": "Washington",
+      "id": 15,
+      "manager": 4,
+      "department": {
+        "id": 9,
+        "name": "Sales Development",
+        "superdepartment": {
+          "id": 6,
+          "name": "Outbound Sales",
+          "superdepartment": {
+            "id": 1,
+            "name": "Sales",
+            "superdepartment": null
+          }
+        }
+      },
+      "office": {
+        "id": 1,
+        "city": "San Francisco",
+        "country": "United States",
+        "address": "450 Market St"
+      }
+    },
+    "department": {
+      "id": 8,
+      "name": "Front-End",
+      "superdepartment": {
+        "id": 2,
+        "name": "Engineering",
+        "superdepartment": null
+      }
+    },
+    "office": {
+      "id": 5,
+      "city": "Tokyo",
+      "country": "Japan",
+      "address": "1 Chome-1-2 Oshiage, Sumida City"
+    }
+  },
+  "employees46_47_48Expanded": [
+    {
+      "first": "Douglas",
+      "last": "Simmons",
+      "id": 46,
+      "manager": {
+        "first": "Thomas",
+        "last": "Washington",
+        "id": 15,
+        "manager": 4,
+        "department": {
+          "id": 9,
+          "name": "Sales Development",
+          "superdepartment": {
+            "id": 6,
+            "name": "Outbound Sales",
+            "superdepartment": {
+              "id": 1,
+              "name": "Sales",
+              "superdepartment": null
+            }
+          }
+        },
+        "office": {
+          "id": 1,
+          "city": "San Francisco",
+          "country": "United States",
+          "address": "450 Market St"
+        }
+      },
+      "department": {
+        "id": 8,
+        "name": "Front-End",
+        "superdepartment": {
+          "id": 2,
+          "name": "Engineering",
+          "superdepartment": null
+        }
+      },
+      "office": {
+        "id": 5,
+        "city": "Tokyo",
+        "country": "Japan",
+        "address": "1 Chome-1-2 Oshiage, Sumida City"
+      }
+    },
+    {
+      "first": "Angela",
+      "last": "Morris",
+      "id": 47,
+      "manager": {
+        "first": "Cynthia",
+        "last": "Scott",
+        "id": 19,
+        "manager": 16,
+        "department": {
+          "id": 2,
+          "name": "Engineering",
+          "superdepartment": null
+        },
+        "office": {
+          "id": 1,
+          "city": "San Francisco",
+          "country": "United States",
+          "address": "450 Market St"
+        }
+      },
+      "department": {
+        "id": 8,
+        "name": "Front-End",
+        "superdepartment": {
+          "id": 2,
+          "name": "Engineering",
+          "superdepartment": null
+        }
+      },
+      "office": {
+        "id": 5,
+        "city": "Tokyo",
+        "country": "Japan",
+        "address": "1 Chome-1-2 Oshiage, Sumida City"
+      }
+    },
+    {
+      "first": "Amanda",
+      "last": "Rivera",
+      "id": 48,
+      "manager": {
+        "first": "Anthony",
+        "last": "Stewart",
+        "id": 17,
+        "manager": 3,
+        "department": {
+          "id": 8,
+          "name": "Front-End",
+          "superdepartment": {
+            "id": 2,
+            "name": "Engineering",
+            "superdepartment": null
+          }
+        },
+        "office": {
+          "id": 4,
+          "city": "Chicago",
+          "country": "United States",
+          "address": "233 S Wacker Dr"
+        }
+      },
+      "department": {
+        "id": 10,
+        "name": "Product Management",
+        "superdepartment": {
+          "id": 3,
+          "name": "Product",
+          "superdepartment": null
+        }
+      },
+      "office": {
+        "id": 2,
+        "city": "New York",
+        "country": "United States",
+        "address": "20 W 34th St"
+      }
+    }
+  ]
+}

@@ -3,13 +3,11 @@ import cors from "cors";
 import helmet from "helmet";
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
-import { errorMiddleware } from "./controllers/errorMiddleware";
 import { version, author, description } from '../package.json';
 
 // get port from environment and store in Express.
 const port = (process.env.PORT || '3000');
 
-// Extended: https://swagger.io/specification/#infoObject
 const swaggerOptions = {
     definition: {
         openapi: "3.0.0",
@@ -34,6 +32,5 @@ app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // middleware to add some security basics:  DNS Prefetch Control, Frameguard, Hide Powered-By, etc
 app.use(helmet());
 app.use(cors());
-app.use(errorMiddleware)
 // create HTTP server to listen
 app.listen(port);
