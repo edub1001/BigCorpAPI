@@ -38,8 +38,14 @@ stages:
     - script: |
         npm install
         npm run build --if-present
-        npm run test --if-present
+        npm run coverageunit --if-present
       displayName: 'npm install, build and test'
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publishing coverage'
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
 
       # Prune dev dependencies
     - script: npm prune --production
