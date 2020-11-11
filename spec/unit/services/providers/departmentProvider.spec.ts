@@ -1,5 +1,4 @@
-import { Department } from '../../../../src/models/department';
-import { DepartmentProvider } from '../../../../src/services/providers/DepartmentProvider';
+import { DepartmentProvider } from '../../../../src/services/providers/departmentProvider';
 
 describe("Department provider", () => {
     let provider:DepartmentProvider;
