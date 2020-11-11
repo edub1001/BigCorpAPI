@@ -35,7 +35,7 @@ export function addEmployeeRoutes(router: Router) {
      *           - name: expand
      *             description: Expand is used to determine which properties in employee or its relationships to expand. Use dot to concatenate related expansions. There are four relationships that can be expanded ->
      *              manager in  employees (expands to  employees); office  in  employees  (expands to  offices); department  in  employees  (expands to  departments);
-     *              superdepartment in  departments (expands to  departments)
+     *              superdepartment in  departments (expands to  departments). Ex. department.superdepartment.superdepartment or manager.manager.office
      *             in: query
      *             required: false
      *             schema:
@@ -44,7 +44,6 @@ export function addEmployeeRoutes(router: Router) {
      *                  type: string
      *             style: form
      *             explode: true
-     *             example: department.superdepartment.superdepartment or manager.manager.office
      *          responses:
      *           200:
      *             description: OK. List of employees matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
@@ -100,7 +99,7 @@ export function addEmployeeRoutes(router: Router) {
      *           - name: expand
      *             description: Expand is used to determine which properties in employee or its relationships to expand. Use dot to concatenate related  expansions. There are four relationships that can be expanded ->
      *              manager in  employees (expands to  employees); office  in  employees  (expands to  offices); department  in  employees  (expands to  departments);
-     *              superdepartment in  departments (expands to  departments)
+     *              superdepartment in  departments (expands to  departments). Ex. department.superdepartment.superdepartment or manager.manager.office
      *             in: query
      *             required: false
      *             schema:
@@ -109,7 +108,6 @@ export function addEmployeeRoutes(router: Router) {
      *                  type: string
      *             style: form
      *             explode: true
-     *             example: department.superdepartment.superdepartment or manager.manager.office
      *          responses:
      *           200:
      *             description: OK. Single employee matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.

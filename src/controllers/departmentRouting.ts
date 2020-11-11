@@ -34,7 +34,7 @@ export function addDepartmentRoutes(router: Router) {
      *              minimum: 0
      *           - name: expand
      *             description: Expand is used to determine which properties in departments or its relationships to expand. Use dot to concatenate related expansions.
-     *              There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments)
+     *              There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments). Ex. superdepartment.superdepartment
      *             in: query
      *             required: false
      *             schema:
@@ -43,7 +43,6 @@ export function addDepartmentRoutes(router: Router) {
      *                  type: string
      *             style: form
      *             explode: true
-     *             example: superdepartment.superdepartment
      *          responses:
      *           200:
      *             description: OK. List of departments matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
@@ -98,7 +97,7 @@ export function addDepartmentRoutes(router: Router) {
      *              minimum: 1
      *           - name: expand
      *             description: Expand is used to determine which properties in departments or its relationships to expand. Use dot to concatenate related  expansions.
-     *              There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments)
+     *              There is one relationship that can be expanded -> superdepartment in  departments (expands to  departments). Ex. superdepartment.superdepartment
      *             in: query
      *             required: false
      *             schema:
@@ -107,7 +106,6 @@ export function addDepartmentRoutes(router: Router) {
      *                  type: string
      *             style: form
      *             explode: true
-     *             example: superdepartment.superdepartment
      *          responses:
      *           200:
      *             description: OK. Single department matching criteria. When an expansion criteria cannot be fulfilled (null, undefined meaning no relationship or id not found), the original unmodified value is returned instead.
