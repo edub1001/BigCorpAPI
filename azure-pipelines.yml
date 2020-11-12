@@ -47,6 +47,19 @@ stages:
         codeCoverageTool: 'Cobertura'
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
 
+      # Prune dev dependencies
+    - script: npm prune --production
+      displayName: "Prune dev dependencies"
+      
+    - task: CopyFiles@2
+      displayName: 'Copy prod node_modules files'
+      inputs:        
+        SourceFolder: '$(System.DefaultWorkingDirectory)/node_modules'
+        Contents: '**'
+        TargetFolder: '$(System.DefaultWorkingDirectory)/dist/node_modules'
+        CleanTargetFolder: true
+        OverWrite: true
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
