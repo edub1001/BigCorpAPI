@@ -4,6 +4,64 @@ API project to be evaluated by Glide
 ## Overview
 Your task is to build a web app with a read-only JSON api for 3 resources,  employees , departments ,  offices , you can use any framework or language for building your app.
 
+## How to do a fast start
+### Install Packages
+
+```
+$ npm install
+```
+
+### Dev start (clean build + linting + live change monitoring)
+
+```
+$ npm start
+```
+
+## Some specifics
+
+### Lint code analysis
+
+```
+$ npm run prebuild
+```
+
+### Build (+Linting)
+
+```
+$ npm run build
+```
+
+### Prod start (needs a build first)
+
+```
+$ npm run prodstart
+```
+
+## Testing
+### Run unit + integration tests
+
+```
+$ npm test
+```
+
+### Run unit tests
+
+```
+$ npm run testunit
+```
+
+### Run coverage for unit + integration tests
+
+```
+$ npm run coverage
+```
+
+### Run coverage for unit tests
+
+```
+$ npm run coverageunit
+```
+
 ## API
 Your app should support GET requests to two endpoints (list & detail) for each resource following a standard REST convention
 ### detail  

@@ -24,7 +24,7 @@ const swaggerOptions = {
             }]
         }
     },
-    apis: ["src/**/*.ts"]
+    apis: ["src/**/*.ts", "src/**/*.js"]
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 // serve swagger in root
