@@ -23,6 +23,13 @@ steps:
     npm run build --if-present
     npm run coverage --if-present
 
+- task: PublishTestResults@2
+  displayName: 'Publishing tests'
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'results.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/coverage'
+    failTaskOnFailedTests: true
 - task: PublishCodeCoverageResults@1
   displayName: 'Publishing coverage'
   inputs:
