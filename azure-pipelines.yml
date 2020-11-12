@@ -39,7 +39,7 @@ stages:
     - script: |
         npm install
         npm run build --if-present
-        npm run coverageunit --if-present
+        npm run coverage --if-present
       displayName: 'npm install, build and test'
       
     - task: PublishTestResults@2
