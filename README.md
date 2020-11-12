@@ -1,5 +1,5 @@
-[![Build Status](https://dev.azure.com/EduardoBack/BigCorpAPI%20Project/_apis/build/status/BigCorpAPI%20-%20CI%20-%20Production?branchName=main)](https://dev.azure.com/EduardoBack/BigCorpAPI%20Project/_build/latest?definitionId=2&branchName=main)
-[Coverage](https://img.shields.io/azure-devops/coverage/EduardoBack/BigCorpAPI/2/main)
+[![Build Status](https://dev.azure.com/EduardoBack/BigCorpAPI/_apis/build/status/BigCorpAPI%20-%20CI%20-%20Production?branchName=main)](https://dev.azure.com/EduardoBack/BigCorpAPI/_build/latest?definitionId=2&branchName=main)
+![Coverage](https://img.shields.io/azure-devops/coverage/EduardoBack/BigCorpAPI/2/main)
 
 
 # BigCorpAPI
