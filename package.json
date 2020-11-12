@@ -9,7 +9,7 @@
     "node-config-ts": "./node_modules/.bin/node-config-ts",
     "clean": "rimraf dist/",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "tsc",
+    "build": "tsc && cpy './config/**/*.json' './dist/' --parents",
     "testunit": "ts-node node_modules/jasmine/bin/jasmine --config=spec/jasmine-unit.json",
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=spec/jasmine.json",
     "coverageunit": "nyc --reporter=cobertura -e .ts -x \"spec/*.spect.ts\" npm run testunit",
@@ -17,7 +17,7 @@
     "prestart": "npm run clean && npm run build",
     "start": "nodemon",
     "postinstall": "node-config-ts",
-    "prodstart": "node dist/src/server.js"
+    "prodstart": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -49,6 +49,7 @@
     "@types/supertest": "^2.0.10",
     "@types/swagger-jsdoc": "^3.0.2",
     "@types/swagger-ui-express": "^4.1.2",
+    "cpy-cli": "^3.1.1",
     "jasmine": "^3.6.3",
     "jasmine-spec-reporter": "^6.0.0",
     "jasmine-ts": "^0.3.0",
