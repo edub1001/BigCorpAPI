@@ -4,7 +4,7 @@ API project to be evaluated by Glide
 ## Overview
 Your task is to build a web app with a read-only JSON api for 3 resources,  employees , departments ,  offices , you can use any framework or language for building your app.
 
-## How to do a fast start
+## How to do a quick start
 ### Install Packages
 
 ```
@@ -31,11 +31,22 @@ $ npm run prebuild
 $ npm run build
 ```
 
-### Prod start (needs a build first)
+### Prod start (needs a build first, executed from packages.json in dist folder)
 
 ```
 $ npm run prodstart
 ```
+
+## Configuration
+### Changing default port
+By default port will be 3000. It can be modified by setting environment variable PORT
+
+```
+$ export PORT=1234
+PS $env:PORT=1234
+cmd set PORT=1234
+```
+For other configurations such as external services URL (employeesUrl), you can change them from config folder according to node-config-ts package: https://www.npmjs.com/package/node-config-ts
 
 ## Testing
 ### Run unit + integration tests
