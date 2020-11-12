@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/EduardoBack/BigCorpAPI%20Project/_apis/build/status/BigCorpAPI%20-%20CI%20-%20Production?branchName=main)](https://dev.azure.com/EduardoBack/BigCorpAPI%20Project/_build/latest?definitionId=2&branchName=main)
+https://dev.azure.com/EduardoBack/BigCorpAPI%20Project/_apis/build/status/BigCorpAPI%20-%20CI%20-%20Production?branchName=main
 
 # BigCorpAPI
 API project to be evaluated by Glide
